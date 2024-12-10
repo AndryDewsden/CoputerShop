@@ -59,7 +59,7 @@ namespace CoputerShop.Pages
 
         private void b_user_Click(object sender, RoutedEventArgs e)
         {
-            AppFrame.frameMain.Navigate(new User());
+            AppFrame.frameMain.Navigate(new User(user));
         }
 
         private void b_shop_Click(object sender, RoutedEventArgs e)
@@ -85,12 +85,19 @@ namespace CoputerShop.Pages
 
                     AppConnect.entities.Products.Add(_curPro);
 
-                    //Changelogs changelogs = new Changelogs();
-                    //changelogs.changelog_user_id = user.id_user;
-                    //changelogs.changelog_message = $"Пользователь {user.id_user}:{user.user_login} успешно добавил товар {_curPro.id_product}:{_curPro.product_name} время: {DateTime.Now}";
-                    //changelogs.changelog_date = DateTime.Now;
-                    
-                    //AppConnect.entities.Changelogs.Add(changelogs);
+                    try
+                    {
+                        Changelogs changelogs = new Changelogs();
+                        changelogs.changelog_user_id = user.id_user;
+                        changelogs.changelog_message = "Htl";
+                        changelogs.changelog_date = DateTime.Now;
+                        AppConnect.entities.Changelogs.Add(changelogs);
+                        AppConnect.entities.SaveChanges();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"{ex}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
 
                     AppConnect.entities.SaveChanges();
                     MessageBox.Show("Товар успешно добавлен.", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -112,12 +119,19 @@ namespace CoputerShop.Pages
             {
                 try
                 {
-                    //Changelogs changelogs = new Changelogs();
-                    //changelogs.changelog_user_id = user.id_user;
-                    //changelogs.changelog_message = $"Пользователь {user.id_user}:{user.user_login} успешно редактировал товар {_curPro.product_name} время: {DateTime.Now}";
-                    //changelogs.changelog_date = DateTime.Now;
-
-                    //AppConnect.entities.Changelogs.Add(changelogs);
+                    try
+                    {
+                        Changelogs changelogs = new Changelogs();
+                        changelogs.changelog_user_id = user.id_user;
+                        changelogs.changelog_message = "Htl";
+                        changelogs.changelog_date = DateTime.Now;
+                        AppConnect.entities.Changelogs.Add(changelogs);
+                        AppConnect.entities.SaveChanges();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"{ex}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
 
                     AppConnect.entities.SaveChanges();
                     MessageBox.Show("Товар успешно редактирован.", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);

@@ -30,7 +30,8 @@
 
             <Grid Grid.Column="0">
                 <StackPanel Orientation="Vertical" VerticalAlignment="Top" HorizontalAlignment="Center">
-                    <Button x:Name="b_user" Content="Пользователь" Width="200" Height="30" Margin="5" Click="b_user_Click"/>
+                    <Button x:Name="b_user" Content="Пользователь" Width="200" Height="30" Margin="5" Click="b_user_Click">
+                    </Button>
                     <Button x:Name="b_cart" Content="Корзина" Width="200" Height="30" Margin="5" Click="b_cart_Click"/>
                     <Button x:Name="b_add" Content="Добавить" Width="200" Height="30" Margin="5" Click="b_add_Click"/>
                     <Button x:Name="b_red" Content="Редактировать" Width="200" Height="30" Margin="5" Click="b_red_Click"/>
@@ -40,86 +41,91 @@
                 </StackPanel>
             </Grid>
 
-            <Grid Grid.Column="1">
-                <ListView x:Name="l_productList" Margin="5" Width="730" Height="480">
+            <Grid Grid.Column="1" VerticalAlignment="Top">
+                <ListView x:Name="l_productList" Margin="5" Width="710" Height="440">
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="140"/>
-                                    <ColumnDefinition Width="150"/>
-                                    <ColumnDefinition Width="140"/>
-                                    <ColumnDefinition Width="200"/>
-                                </Grid.ColumnDefinitions>
+                            <Border BorderThickness="1" BorderBrush="Black" CornerRadius="25">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="110"/>
+                                        <ColumnDefinition Width="180"/>
+                                        <ColumnDefinition Width="210"/>
+                                        <ColumnDefinition Width="160"/>
+                                    </Grid.ColumnDefinitions>
 
-                                <StackPanel Grid.Column="0">
-                                    <TextBlock>
-                                        <Image Source=""/>
-                                    </TextBlock>
-                                </StackPanel>
-
-                                <StackPanel Grid.Column="1" Orientation="Vertical">
-                                    <StackPanel Orientation="Horizontal">
+                                    <StackPanel Grid.Column="0">
                                         <TextBlock>
+                                        <Image Source=""/>
+                                        </TextBlock>
+                                    </StackPanel>
+
+                                    <StackPanel Grid.Column="1" Orientation="Vertical">
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock>
                                         <Run Text="{Binding ProductTypes.product_type_name}"/>
                                         <Run Text=" | "/>
                                         <Run Text="{Binding product_name}"/>
-                                        </TextBlock>
-                                    </StackPanel>
+                                            </TextBlock>
+                                        </StackPanel>
 
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock>
                                         <Run Text="Производитель: " FontWeight="Bold"/>
-                                        <Run Text="{Binding product_creator}"/>
+                                        <Run Text="{Binding ProductCreators.product_creator_name}"/>
+                                            </TextBlock>
+                                        </StackPanel>
+
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock>
+                                                <Run Text="Поставщик: " FontWeight="Bold"/>
+                                                <Run Text="{Binding ProductSellers.product_seller_name}"/>
+                                            </TextBlock>
+                                        </StackPanel>
+
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock>
+                                                <Run Text="Розничная цена: " FontWeight="Bold"/>
+                                                <Run Text="{Binding product_retail_price}"/>
+                                                <Run Text=" руб."/>
+                                            </TextBlock>
+                                        </StackPanel>
+
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock>
+                                                <Run Text="Оптовая цена: " FontWeight="Bold"/>
+                                                <Run Text="{Binding product_wholesale_price}"/>
+                                                <Run Text=" руб."/>
+                                            </TextBlock>
+                                        </StackPanel>
+
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock>
+                                                <Run Text="Статус товара: " FontWeight="Bold"/>
+                                                <Run Text="{Binding ProductStatuses.product_status_name}"/>
+                                            </TextBlock>
+                                        </StackPanel>
+                                    </StackPanel>
+
+                                    <StackPanel Grid.Column="2" Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                        <TextBlock>
+                                            <Run Text="Описание: " FontWeight="Bold"/>
+                                            <Run Text="{Binding product_description}"/>
                                         </TextBlock>
                                     </StackPanel>
 
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock>
-                                        <Run Text="Поставщик: " FontWeight="Bold"/>
-                                        <Run Text="{Binding product_seller}"/>
-                                        </TextBlock>
+                                    <StackPanel Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Vertical">
+                                        <Button x:Name="b_add_to_cart" Content="В корзину" Width="100" Height="30" Margin="5" Click="b_add_to_cart_Click"/>
+                                        <StackPanel Orientation="Horizontal" x:Name="s_bouth_panel" HorizontalAlignment="Center">
+                                            <Button x:Name="b_less" Content="-" Width="30" Height="30" Margin="5" Click="b_less_Click"/>
+                                            <TextBlock>
+                                            <Run Text="{Binding Products.Sells.sell_product_count}" x:Name="t_count"/>
+                                            </TextBlock>
+                                            <Button x:Name="b_more" Content="+" Width="30" Height="30" Margin="5" Click="b_more_Click"/>
+                                        </StackPanel>
                                     </StackPanel>
-                                </StackPanel>
-
-                                <StackPanel Grid.Column="2">
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock>
-                                        <Run Text="Розничная цена: " FontWeight="Bold"/>
-                                        <Run Text="{Binding product_retail_price}"/>
-                                        </TextBlock>
-                                    </StackPanel>
-
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock>
-                                        <Run Text="Оптовая цена: " FontWeight="Bold"/>
-                                        <Run Text="{Binding product_wholesale_price}"/>
-                                        </TextBlock>
-                                    </StackPanel>
-
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock>
-                                        <Run Text="Статус товара: " FontWeight="Bold"/>
-                                        <Run Text="{Binding ProductStatuses.product_status_name}"/>
-                                        </TextBlock>
-                                    </StackPanel>
-                                </StackPanel>
-
-                                <StackPanel Grid.Column="3">
-                                    <TextBlock>
-                                        <Run Text="Описание: " FontWeight="Bold"/>
-                                        <Run Text="{Binding product_description}"/>
-                                    </TextBlock>
-                                    <Button x:Name="b_add_to_cart" Content="В корзину" Width="160" Height="30" Margin="5" Click="b_add_to_cart_Click"/>
-                                    <StackPanel Orientation="Horizontal" x:Name="s_bouth_panel" Visibility="Hidden">
-                                        <Button x:Name="b_less" Content="-" Width="30" Height="30" Margin="5" Click="b_less_Click"/>
-                                        <TextBlock>
-                                            <Run Text=""/>
-                                        </TextBlock>
-                                        <Button x:Name="b_more" Content="+" Width="30" Height="30" Margin="5" Click="b_more_Click"/>
-                                    </StackPanel>
-                                </StackPanel>
-                            </Grid>
+                                </Grid>
+                            </Border>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>

@@ -102,17 +102,24 @@ namespace CoputerShop.Pages
 
             }
 
+            var p = AppConnect.entities.Orders.FirstOrDefault(x => x.order_user_id == user.id_user && x.order_status_id != 2 && x.order_status_id != 3).id_order;
+            var d = AppConnect.entities.Sells.Where(x => x.sell_order_id == p).ToList();
+            for(int i = 0; i < d.Count(); i++)
+            {
+                
+            }
+
             return pro.ToArray();
         }
 
         private void b_user_Click(object sender, RoutedEventArgs e)
         {
-            AppFrame.frameMain.Navigate(new User());
+            AppFrame.frameMain.Navigate(new User(user));
         }
 
         private void b_cart_Click(object sender, RoutedEventArgs e)
         {
-            AppFrame.frameMain.Navigate(new Cart());
+            AppFrame.frameMain.Navigate(new Cart(user));
         }
 
         private void b_add_Click(object sender, RoutedEventArgs e)
@@ -175,7 +182,7 @@ namespace CoputerShop.Pages
 
         private void b_exit_Click(object sender, RoutedEventArgs e)
         {
-
+            AppFrame.frameMain.Navigate(new Autorisation());
         }
 
         private void t_searcher_t_TextChanged(object sender, TextChangedEventArgs e)
@@ -199,10 +206,8 @@ namespace CoputerShop.Pages
 
             Orders userList = AppConnect.entities.Orders.FirstOrDefault(x => x.order_user_id == user.id_user && x.order_status_id != 2 && x.order_status_id != 3);
 
-            //присваивание сотрудника к номеру проекта
             if (userList == null)
             {
-                //генератор номера проекта                
                 Random r = new Random();
                 numOrder = "";
 
@@ -254,15 +259,10 @@ namespace CoputerShop.Pages
                 numOrder = userList.order_indification_number.ToString();
             }
 
-            //Добавление сотрудника в корзину проекта
             var ord = (Products)l_productList.SelectedItem;
-
-            //ищем наш проект
             var num = AppConnect.entities.Orders.FirstOrDefault(x => x.order_indification_number == numOrder && (x.order_status_id != 2 || x.order_status_id != 3));
-            //ищем нашего сотрудника
             var goodOrder = AppConnect.entities.Sells.FirstOrDefault(x => x.sell_product_id == ord.id_product && x.sell_order_id == num.id_order);
 
-            //если сотрудника ещё нет в корзине
             if (ord != null && goodOrder == null)
             {
                 try
@@ -275,29 +275,80 @@ namespace CoputerShop.Pages
                     };
                     AppConnect.entities.Sells.Add(userOrder);
                     AppConnect.entities.SaveChanges();
-                    MessageBox.Show("Пользователь успешно подсоединён к проекту.", "Тестовое уведомление", MessageBoxButton.OK);
+                    MessageBox.Show("Товар успешно добавлен в корзину.", "Тестовое уведомление", MessageBoxButton.OK);
+
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Ошибка при внедрении данных пользователя!\n{ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show($"Ошибка при внедрении данных:\n{ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
-
-            //если сотрудник уже есть в корзине 
             else
             {
-                MessageBox.Show("Этот сотрудник уже состоит в проекте!", "Уведомление", MessageBoxButton.OK);
+                MessageBox.Show("Этот товар уже есть в корзине!", "Уведомление", MessageBoxButton.OK);
             }
         }
 
         private void b_less_Click(object sender, RoutedEventArgs e)
         {
+            if (l_productList.SelectedItem != null)
+            {
+                Products pro = (Products)l_productList.SelectedItem;
+                Sells prof = AppConnect.entities.Sells.FirstOrDefault(x => x.sell_product_id == pro.id_product && x.sell_order_id == AppConnect.entities.Orders.FirstOrDefault(y => y.order_user_id == user.id_user).id_order);
+                if (prof.sell_product_count > 1)
+                {
+                    try
+                    {
+                        prof.sell_product_count--;
 
+                        AppConnect.entities.SaveChanges();
+                        MessageBox.Show("Товар успешно уменьшил своё количество", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Ошибка при изменении данных (-):\n{ex}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Вы не можете уменьшить минимальное количество этого товара", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Выберите товар", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
         }
 
         private void b_more_Click(object sender, RoutedEventArgs e)
         {
+            if (l_productList.SelectedItem != null)
+            {
+                Products pro = (Products)l_productList.SelectedItem;
+                Sells prof = AppConnect.entities.Sells.FirstOrDefault(x => x.sell_product_id == pro.id_product && x.sell_order_id == AppConnect.entities.Orders.FirstOrDefault(y => y.order_user_id == user.id_user).id_order);
+                if (prof.sell_product_count < 99)
+                {
+                    try
+                    {
+                        prof.sell_product_count++;
 
+                        AppConnect.entities.SaveChanges();
+                        MessageBox.Show("Товар успешно уменьшил своё количество", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Ошибка при изменении данных (-):\n{ex}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Вы не можете увеличить максимальное количество этого товара", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Выберите товар", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
         }
     }
 }
