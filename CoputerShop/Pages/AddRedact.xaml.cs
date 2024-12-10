@@ -79,23 +79,25 @@ namespace CoputerShop.Pages
                     _curPro.product_retail_price = Convert.ToDouble(t_retail.Text);
                     _curPro.product_wholesale_price = Convert.ToDouble(t_whole.Text);
                     _curPro.product_creator_id = AppConnect.entities.ProductCreators.FirstOrDefault(x => x.product_creator_name == c_creator.Text).id_product_creator;
-                    _curPro.product_seller_id = AppConnect.entities.ProductSellers.FirstOrDefault(x => x.product_seller_name == c_creator.Text).id_product_seller;
-                    _curPro.product_status_id = AppConnect.entities.ProductStatuses.FirstOrDefault(x => x.product_status_name == c_creator.Text).id_product_status;
-                    _curPro.product_type_id = AppConnect.entities.ProductTypes.FirstOrDefault(x => x.product_type_name == c_creator.Text).id_product_type;
+                    _curPro.product_seller_id = AppConnect.entities.ProductSellers.FirstOrDefault(x => x.product_seller_name == c_seller.Text).id_product_seller;
+                    _curPro.product_status_id = AppConnect.entities.ProductStatuses.FirstOrDefault(x => x.product_status_name == c_status.Text).id_product_status;
+                    _curPro.product_type_id = AppConnect.entities.ProductTypes.FirstOrDefault(x => x.product_type_name == c_type.Text).id_product_type;
 
                     AppConnect.entities.Products.Add(_curPro);
 
-                    Changelogs changelogs = new Changelogs();
-                    changelogs.changelog_user_id = user.id_user;
-                    changelogs.changelog_message = $"Пользователь {user.id_user}:{user.user_login} успешно добавил товар {_curPro.id_product}:{_curPro.product_name} время: {DateTime.Now}";
-                    changelogs.changelog_date = DateTime.Now;
+                    //Changelogs changelogs = new Changelogs();
+                    //changelogs.changelog_user_id = user.id_user;
+                    //changelogs.changelog_message = $"Пользователь {user.id_user}:{user.user_login} успешно добавил товар {_curPro.id_product}:{_curPro.product_name} время: {DateTime.Now}";
+                    //changelogs.changelog_date = DateTime.Now;
                     
-                    AppConnect.entities.Changelogs.Add(changelogs);
+                    //AppConnect.entities.Changelogs.Add(changelogs);
+
                     AppConnect.entities.SaveChanges();
+                    MessageBox.Show("Товар успешно добавлен.", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("\n" + ex, "Ошибка ввода данных на сервер", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Ошибка при вводе данных на сервер:\n" + ex, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
             else
@@ -110,22 +112,44 @@ namespace CoputerShop.Pages
             {
                 try
                 {
-                    Changelogs changelogs = new Changelogs();
-                    changelogs.changelog_user_id = user.id_user;
-                    changelogs.changelog_message = $"Пользователь {user.id_user}:{user.user_login} успешно редактировал товар {_curPro.id_product}:{_curPro.product_name} время: {DateTime.Now}";
-                    changelogs.changelog_date = DateTime.Now;
-                    
-                    AppConnect.entities.Changelogs.Add(changelogs);
+                    //Changelogs changelogs = new Changelogs();
+                    //changelogs.changelog_user_id = user.id_user;
+                    //changelogs.changelog_message = $"Пользователь {user.id_user}:{user.user_login} успешно редактировал товар {_curPro.product_name} время: {DateTime.Now}";
+                    //changelogs.changelog_date = DateTime.Now;
+
+                    //AppConnect.entities.Changelogs.Add(changelogs);
+
                     AppConnect.entities.SaveChanges();
+                    MessageBox.Show("Товар успешно редактирован.", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("\n" + ex, "Ошибка редактирования данных на сервере", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Ошибка при редактировании данных на сервере:\n" + ex, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
             else
             {
                 MessageBox.Show("Заполните всё обязательные поля!", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
+
+        private void t_retail_TextInput(object sender, TextCompositionEventArgs e)
+        {
+            CheckIsNumeric(e);
+        }
+
+        private void t_whole_TextInput(object sender, TextCompositionEventArgs e)
+        {
+            CheckIsNumeric(e);
+        }
+
+        private void CheckIsNumeric(TextCompositionEventArgs e)
+        {
+            int result;
+
+            if (!(int.TryParse(e.Text, out result) || e.Text == "."))
+            {
+                e.Handled = true;
             }
         }
     }

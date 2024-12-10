@@ -135,7 +135,37 @@ namespace CoputerShop.Pages
 
         private void b_del_Click(object sender, RoutedEventArgs e)
         {
+            if (l_productList.SelectedItem != null)
+            {
+                Products product = (Products)l_productList.SelectedItem;
+                var a = MessageBox.Show($"Вы дейтвительно хотите удалить этот товар?\nКод|Название: {product.id_product}:{product.product_name}", "Уведомление", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if(a == MessageBoxResult.Yes)
+                {
+                    try
+                    {
+                        AppConnect.entities.Products.Remove(product);
 
+                        //Changelogs changelogs = new Changelogs();
+                        //changelogs.changelog_user_id = user.id_user;
+                        //changelogs.changelog_message = "";
+                        //changelogs.changelog_date = DateTime.Now;
+
+                        //AppConnect.entities.Changelogs.Add(changelogs);
+
+
+                        AppConnect.entities.SaveChanges();
+                        MessageBox.Show("Товар успешно удалён.", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Ошибка при удалении данных:\n{ex}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Выберите удаляемый товар!", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
         }
 
         private void b_france_Click(object sender, RoutedEventArgs e)
@@ -161,6 +191,113 @@ namespace CoputerShop.Pages
         private void c_filter_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             l_productList.ItemsSource = FindProduct();
+        }
+
+        private void b_add_to_cart_Click(object sender, RoutedEventArgs e)
+        {
+            string numOrder;
+
+            Orders userList = AppConnect.entities.Orders.FirstOrDefault(x => x.order_user_id == user.id_user && x.order_status_id != 2 && x.order_status_id != 3);
+
+            //присваивание сотрудника к номеру проекта
+            if (userList == null)
+            {
+                //генератор номера проекта                
+                Random r = new Random();
+                numOrder = "";
+
+                while (AppConnect.entities.Orders.Where(x => x.order_indification_number == numOrder).Count() > 0 || numOrder == "")
+                {
+                    numOrder = "UN0";
+                    for (int i = 0; i < 10; i++)
+                    {
+                        int t = r.Next(0, 2);
+                        switch (t)
+                        {
+                            case 0:
+                                numOrder += Convert.ToChar(r.Next(65, 90));
+                                break;
+                            case 1:
+                                numOrder += r.Next(0, 10).ToString();
+                                break;
+                        }
+                    }
+                    MessageBox.Show("Номер создан", "", MessageBoxButton.OK);
+
+                    if (AppConnect.entities.Orders.Where(x => x.order_indification_number == numOrder).Count() > 0)
+                    {
+                        MessageBox.Show("Такой номер уже есть.", "lol", MessageBoxButton.OK);
+                    }
+                }
+
+                try
+                {
+                    Orders userDir = new Orders()
+                    {
+                        order_indification_number = numOrder,
+                        order_status_id = 1,
+                        order_creating_date = DateTime.Now,
+                        order_user_id = user.id_user
+                    };
+                    AppConnect.entities.Orders.Add(userDir);
+                    AppConnect.entities.SaveChanges();
+                    MessageBox.Show($"Новый номер сгенернирован: {numOrder}", "Тестирование", MessageBoxButton.OK);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Ошибка при внедрении данных на сервер!\n{ex.Message}", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Товару успешно присвоен номер", "Тестирование", MessageBoxButton.OK);
+                numOrder = userList.order_indification_number.ToString();
+            }
+
+            //Добавление сотрудника в корзину проекта
+            var ord = (Products)l_productList.SelectedItem;
+
+            //ищем наш проект
+            var num = AppConnect.entities.Orders.FirstOrDefault(x => x.order_indification_number == numOrder && (x.order_status_id != 2 || x.order_status_id != 3));
+            //ищем нашего сотрудника
+            var goodOrder = AppConnect.entities.Sells.FirstOrDefault(x => x.sell_product_id == ord.id_product && x.sell_order_id == num.id_order);
+
+            //если сотрудника ещё нет в корзине
+            if (ord != null && goodOrder == null)
+            {
+                try
+                {
+                    Sells userOrder = new Sells()
+                    {
+                        sell_order_id = num.id_order,
+                        sell_product_id = ord.id_product,
+                        sell_product_count = 1
+                    };
+                    AppConnect.entities.Sells.Add(userOrder);
+                    AppConnect.entities.SaveChanges();
+                    MessageBox.Show("Пользователь успешно подсоединён к проекту.", "Тестовое уведомление", MessageBoxButton.OK);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Ошибка при внедрении данных пользователя!\n{ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+
+            //если сотрудник уже есть в корзине 
+            else
+            {
+                MessageBox.Show("Этот сотрудник уже состоит в проекте!", "Уведомление", MessageBoxButton.OK);
+            }
+        }
+
+        private void b_less_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void b_more_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

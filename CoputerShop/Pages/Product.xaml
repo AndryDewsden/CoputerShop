@@ -110,13 +110,13 @@
                                         <Run Text="Описание: " FontWeight="Bold"/>
                                         <Run Text="{Binding product_description}"/>
                                     </TextBlock>
-                                    <Button x:Name="b_add_to_cart" Content="В корзину" Width="160" Height="30" Margin="5"/>
+                                    <Button x:Name="b_add_to_cart" Content="В корзину" Width="160" Height="30" Margin="5" Click="b_add_to_cart_Click"/>
                                     <StackPanel Orientation="Horizontal" x:Name="s_bouth_panel" Visibility="Hidden">
-                                        <Button x:Name="b_less" Content="-" Width="30" Height="30" Margin="5"/>
+                                        <Button x:Name="b_less" Content="-" Width="30" Height="30" Margin="5" Click="b_less_Click"/>
                                         <TextBlock>
                                             <Run Text=""/>
                                         </TextBlock>
-                                        <Button x:Name="b_more" Content="+" Width="30" Height="30" Margin="5"/>
+                                        <Button x:Name="b_more" Content="+" Width="30" Height="30" Margin="5" Click="b_more_Click"/>
                                     </StackPanel>
                                 </StackPanel>
                             </Grid>

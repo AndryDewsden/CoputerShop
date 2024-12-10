@@ -5,10 +5,46 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:CoputerShop.Pages"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="550" d:DesignWidth="1000"
       Title="User">
 
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="240"/>
+            <ColumnDefinition Width="760"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Column="0">
+            <StackPanel>
+                <Button x:Name="b_shop" Content="Магазин" Width="200" Height="30" Margin="5"/>
+                <Button x:Name="b_cart" Content="Корзина" Width="200" Height="30" Margin="5"/>
+                <ComboBox x:Name="c_list_chose" Width="200" Height="30" Margin="5"/>
+            </StackPanel>
+        </Grid>
+
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="500"/>
+            </Grid.RowDefinitions>
+            
+            <StackPanel x:Name="s_user_list" Orientation="Horizontal">
+                <ListView>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+
+                <StackPanel Orientation="Vertical">
+                    
+                </StackPanel>
+            </StackPanel>
+
+            <StackPanel>
+                
+            </StackPanel>
+        </Grid>
     </Grid>
 </Page>

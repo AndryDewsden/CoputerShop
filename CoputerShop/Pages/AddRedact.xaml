@@ -36,9 +36,9 @@
                     <Label Content="Описание" Width="200" Height="30" Margin="5"/>
                     <TextBox x:Name="t_desc" Text="{Binding product_description}" Width="200" Height="30" Margin="5"/>
                     <Label Content="Розничная цена" Width="200" Height="30" Margin="5"/>
-                    <TextBox x:Name="t_retail" Text="{Binding product_retail_price}" Width="200" Height="30" Margin="5"/>
+                    <TextBox x:Name="t_retail" Text="{Binding product_retail_price}" Width="200" Height="30" Margin="5" TextInput="t_retail_TextInput"/>
                     <Label Content="Оптовая цена" Width="200" Height="30" Margin="5"/>
-                    <TextBox x:Name="t_whole" Text="{Binding product_wholesale_price}" Width="200" Height="30" Margin="5"/>
+                    <TextBox x:Name="t_whole" Text="{Binding product_wholesale_price}" Width="200" Height="30" Margin="5" TextInput="t_whole_TextInput"/>
                     <Label Content="Изображение" Width="200" Height="30" Margin="5"/>
                     <TextBox x:Name="t_image" Text="{Binding product_image}" Width="200" Height="30" Margin="5"/>
                     <Button x:Name="b_image" Content="Применить изображение" Width="200" Height="30" Margin="5"/>

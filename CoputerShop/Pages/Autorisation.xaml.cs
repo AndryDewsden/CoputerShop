@@ -35,15 +35,15 @@ namespace CoputerShop.Pages
                         switch (us.user_role_id)
                         {
                             case 1:
-                                MessageBox.Show("", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Error);
+                                MessageBox.Show($"Приветствую, пользователь {us.user_name}!", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
                                 AppFrame.frameMain.Navigate(new Product(us));
                                 break;
                             case 2:
-                                MessageBox.Show("", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Error);
+                                MessageBox.Show($"Приветствую, менеджер {us.user_name}!", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
                                 AppFrame.frameMain.Navigate(new Product(us));
                                 break;
                             case 3:
-                                MessageBox.Show("", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Error);
+                                MessageBox.Show($"Приветствую, администратор {us.user_name}!", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
                                 AppFrame.frameMain.Navigate(new Product(us));
                                 break;
                             default:
