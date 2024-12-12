@@ -12,17 +12,17 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using CoputerShop.ApplicationData;
 
 namespace CoputerShop.Pages
 {
-    /// <summary>
-    /// Логика взаимодействия для Registration.xaml
-    /// </summary>
     public partial class Registration : Page
     {
         public Registration()
         {
             InitializeComponent();
         }
+
+        
     }
 }

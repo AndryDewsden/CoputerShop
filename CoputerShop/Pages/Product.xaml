@@ -119,7 +119,7 @@
                                         <StackPanel Orientation="Horizontal" x:Name="s_bouth_panel" HorizontalAlignment="Center">
                                             <Button x:Name="b_less" Content="-" Width="30" Height="30" Margin="5" Click="b_less_Click"/>
                                             <TextBlock>
-                                            <Run Text="{Binding Products.Sells.sell_product_count}" x:Name="t_count"/>
+                                            <Run Text="{Binding Sells.sell_product_count}" x:Name="t_count"/>
                                             </TextBlock>
                                             <Button x:Name="b_more" Content="+" Width="30" Height="30" Margin="5" Click="b_more_Click"/>
                                         </StackPanel>

@@ -23,23 +23,49 @@
         </Grid>
 
         <Grid Grid.Column="1">
-            <StackPanel x:Name="s_users">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="500"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Row="0" Orientation="Horizontal">
+                <TextBox x:Name="t_searcher" Margin="5" Height="30" Width="300" HorizontalAlignment="Left" VerticalAlignment="Center" TextChanged="t_searcher_TextChanged"/>
+                
+                <ComboBox x:Name="c_user_role" Margin="5" Height="30" Width="200" IsEnabled="False" Visibility="Collapsed" SelectionChanged="c_user_role_SelectionChanged"/>
+                <ComboBox x:Name="c_user_alp" Margin="5" Height="30" Width="200" IsEnabled="False" Visibility="Collapsed" SelectionChanged="c_user_alp_SelectionChanged"/>
+
+                <ComboBox x:Name="c_order_status" Margin="5" Height="30" Width="200" IsEnabled="False" Visibility="Collapsed" SelectionChanged="c_order_status_SelectionChanged"/>
+                <ComboBox x:Name="c_order_date" Margin="5" Height="30" Width="200" IsEnabled="False" Visibility="Collapsed" SelectionChanged="c_order_date_SelectionChanged"/>
+
+                <ComboBox x:Name="c_sell_count" Margin="5" Height="30" Width="200" IsEnabled="False" Visibility="Collapsed" SelectionChanged="c_sell_count_SelectionChanged"/>
+
+                <ComboBox x:Name="c_log_date" Margin="5" Height="30" Width="200" IsEnabled="False" Visibility="Collapsed" SelectionChanged="c_log_date_SelectionChanged"/>
+            </StackPanel>
+            
+            <StackPanel x:Name="s_users" Grid.Row="1">
                 <ListView x:Name="l_user_list" Margin="5" Width="500" Height="480" VerticalAlignment="Top" HorizontalAlignment="Left">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <Grid>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="200"/>
-                                    <ColumnDefinition Width="200"/>
+                                    <ColumnDefinition Width="160"/>
+                                    <ColumnDefinition Width="160"/>
+                                    <ColumnDefinition Width="160"/>
                                 </Grid.ColumnDefinitions>
 
                                 <StackPanel Grid.Column="0">
                                     <TextBlock>
-                                        <Run Text="{Binding Users.user_login}"/>
+                                        <Run Text="{Binding user_name}"/>
+                                    </TextBlock>    
+                                </StackPanel>
+                                
+                                <StackPanel Grid.Column="1">
+                                    <TextBlock>
+                                        <Run Text="{Binding user_login}"/>
                                     </TextBlock>
                                 </StackPanel>
 
-                                <StackPanel Grid.Column="1">
+                                <StackPanel Grid.Column="2">
                                     <TextBlock>
                                         <Run Text="{Binding UserRoles.user_role_name}"/>
                                     </TextBlock>
@@ -50,22 +76,22 @@
                 </ListView>
             </StackPanel>
 
-            <StackPanel x:Name="s_orders">
+            <StackPanel x:Name="s_orders" Grid.Row="1">
                 <ListView x:Name="l_order_list" Margin="5" Width="500" Height="480" VerticalAlignment="Top" HorizontalAlignment="Left">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <Grid>
                                 <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="80"/>
                                     <ColumnDefinition Width="100"/>
-                                    <ColumnDefinition Width="100"/>
-                                    <ColumnDefinition Width="100"/>
-                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="120"/>
+                                    <ColumnDefinition Width="120"/>
                                     <ColumnDefinition Width="80"/>
                                 </Grid.ColumnDefinitions>
 
                                 <StackPanel Grid.Column="0">
                                     <TextBlock>
-                                        <Run Text="{Binding order_user_id}"/>
+                                        <Run Text="{Binding Users.user_login}"/>
                                     </TextBlock>
                                 </StackPanel>
 
@@ -98,7 +124,55 @@
                 </ListView>
             </StackPanel>
 
-            <StackPanel x:Name="s_logs">
+            <StackPanel x:Name="s_sells" Grid.Row="1">
+                <ListView x:Name="l_sells_list" Margin="5" Width="500" Height="480" VerticalAlignment="Top" HorizontalAlignment="Left">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="110"/>
+                                    <ColumnDefinition Width="110"/>
+                                    <ColumnDefinition Width="110"/>
+                                    <ColumnDefinition Width="50"/>
+                                    <ColumnDefinition Width="78"/>
+                                </Grid.ColumnDefinitions>
+
+                                <StackPanel Grid.Column="0">
+                                    <TextBlock>
+                                        <Run Text="{Binding Orders.Users.user_login}"/>
+                                    </TextBlock>
+                                </StackPanel>
+
+                                <StackPanel Grid.Column="1">
+                                    <TextBlock>
+                                        <Run Text="{Binding Orders.order_indification_number}"/>
+                                    </TextBlock>
+                                </StackPanel>
+
+                                <StackPanel Grid.Column="2">
+                                    <TextBlock>
+                                        <Run Text="{Binding Products.product_name}"/>
+                                    </TextBlock>
+                                </StackPanel>
+
+                                <StackPanel Grid.Column="3">
+                                    <TextBlock>
+                                        <Run Text="{Binding sell_product_count}"/>
+                                    </TextBlock>
+                                </StackPanel>
+
+                                <StackPanel Grid.Column="4">
+                                    <TextBlock>
+                                        <Run Text="{Binding Orders.OrderStatuses.order_status_name}"/>
+                                    </TextBlock>
+                                </StackPanel>
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackPanel>
+
+            <StackPanel x:Name="s_logs" Grid.Row="1">
                 <ListView x:Name="l_log_list" Margin="5" Width="500" Height="480" VerticalAlignment="Top" HorizontalAlignment="Left">
                     <ListView.ItemTemplate>
                         <DataTemplate>
