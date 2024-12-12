@@ -24,6 +24,7 @@ namespace CoputerShop.Pages
         {
             InitializeComponent();
             user = us;
+            b_user.Content = user.user_name;
 
             c_type.Items.Add("");
             for(int i = 0; i < AppConnect.entities.ProductTypes.Count(); i++)
@@ -51,7 +52,14 @@ namespace CoputerShop.Pages
 
             if (product != null)
             {
+                Title = $"Редактирование";
                 _curPro = product;
+            }
+            else
+            {
+                Title = $"Добавление";
+                b_red.IsEnabled = false;
+                b_red.Visibility = Visibility.Collapsed;
             }
 
             DataContext = _curPro;
@@ -87,11 +95,15 @@ namespace CoputerShop.Pages
 
                     try
                     {
-                        Changelogs changelogs = new Changelogs();
-                        changelogs.changelog_user_id = user.id_user;
-                        changelogs.changelog_message = "Htl";
-                        changelogs.changelog_date = DateTime.Now;
+                        Changelogs changelogs = new Changelogs()
+                        {
+                            changelog_user_id = user.id_user,
+                            changelog_message = $"Добавил продукт {_curPro.id_product}:{_curPro.product_name}",
+                            changelog_date = DateTime.Now
+                        };
+                        
                         AppConnect.entities.Changelogs.Add(changelogs);
+
                         AppConnect.entities.SaveChanges();
                     }
                     catch (Exception ex)
@@ -121,11 +133,15 @@ namespace CoputerShop.Pages
                 {
                     try
                     {
-                        Changelogs changelogs = new Changelogs();
-                        changelogs.changelog_user_id = user.id_user;
-                        changelogs.changelog_message = "Htl";
-                        changelogs.changelog_date = DateTime.Now;
+                        Changelogs changelogs = new Changelogs()
+                        {
+                            changelog_user_id = user.id_user,
+                            changelog_message = $"Изменил продукт {_curPro.id_product}:{_curPro.product_name}",
+                            changelog_date = DateTime.Now
+                        };
+                        
                         AppConnect.entities.Changelogs.Add(changelogs);
+                        
                         AppConnect.entities.SaveChanges();
                     }
                     catch (Exception ex)
@@ -147,16 +163,6 @@ namespace CoputerShop.Pages
             }
         }
 
-        private void t_retail_TextInput(object sender, TextCompositionEventArgs e)
-        {
-            CheckIsNumeric(e);
-        }
-
-        private void t_whole_TextInput(object sender, TextCompositionEventArgs e)
-        {
-            CheckIsNumeric(e);
-        }
-
         private void CheckIsNumeric(TextCompositionEventArgs e)
         {
             int result;
@@ -165,6 +171,16 @@ namespace CoputerShop.Pages
             {
                 e.Handled = true;
             }
+        }
+
+        private void t_whole_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            CheckIsNumeric(e);
+        }
+
+        private void t_retail_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            CheckIsNumeric(e);
         }
     }
 }

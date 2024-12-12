@@ -30,20 +30,56 @@ namespace CoputerShop.Pages
                 try
                 {
                     Users us = AppConnect.entities.Users.FirstOrDefault(x => x.user_login == login_box.Text && x.user_password == pass_box.Password);
+                    
                     if (us != null)
                     {
                         switch (us.user_role_id)
                         {
                             case 1:
                                 MessageBox.Show($"Приветствую, пользователь {us.user_name}!", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                                Changelogs changelogs = new Changelogs();
+
+                                changelogs = new Changelogs()
+                                {
+                                    changelog_user_id = us.id_user,
+                                    changelog_message = $"Пользователь {us.user_login}:{us.user_name} успешно вошёл в сеть",
+                                    changelog_date = DateTime.Now
+                                };
+
+                                AppConnect.entities.Changelogs.Add(changelogs);
+                                AppConnect.entities.SaveChanges();
+
                                 AppFrame.frameMain.Navigate(new Product(us));
                                 break;
                             case 2:
                                 MessageBox.Show($"Приветствую, менеджер {us.user_name}!", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                                changelogs = new Changelogs()
+                                {
+                                    changelog_user_id = us.id_user,
+                                    changelog_message = $"Менеджер {us.user_login}:{us.user_name} успешно вошёл в сеть",
+                                    changelog_date = DateTime.Now
+                                };
+
+                                AppConnect.entities.Changelogs.Add(changelogs);
+                                AppConnect.entities.SaveChanges();
+
                                 AppFrame.frameMain.Navigate(new Product(us));
                                 break;
                             case 3:
                                 MessageBox.Show($"Приветствую, администратор {us.user_name}!", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                                changelogs = new Changelogs()
+                                {
+                                    changelog_user_id = us.id_user,
+                                    changelog_message = $"Администратор {us.user_login}:{us.user_name} успешно вошёл в сеть",
+                                    changelog_date = DateTime.Now
+                                };
+
+                                AppConnect.entities.Changelogs.Add(changelogs);
+                                AppConnect.entities.SaveChanges();
+
                                 AppFrame.frameMain.Navigate(new Product(us));
                                 break;
                             default:
@@ -74,7 +110,12 @@ namespace CoputerShop.Pages
 
         private void Exit_b_Click(object sender, RoutedEventArgs e)
         {
-            //App.Close();
+            var exitBi = MessageBox.Show("Вы уверенны, что хотите закрыть приложение?", "Выход из приложения", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            if (exitBi == MessageBoxResult.Yes)
+            {
+                Application.Current.Shutdown();
+            }
         }
     }
 }

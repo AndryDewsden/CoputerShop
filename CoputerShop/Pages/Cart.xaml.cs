@@ -25,6 +25,7 @@ namespace CoputerShop.Pages
         {
             InitializeComponent();
             user = use;
+            b_user.Content = user.user_name;
 
             _curCart = AppConnect.entities.Orders.FirstOrDefault(x => x.order_user_id == use.id_user && x.order_status_id != 2 && x.order_status_id != 3);
 
@@ -35,7 +36,10 @@ namespace CoputerShop.Pages
             }
             else
             {
-                //OrderMake.IsEnabled = false;
+                b_done.IsEnabled = false;
+                l_count.Content = "Ваша корзина пуста";
+                l_retail_price.Visibility = Visibility.Collapsed;
+                l_whole_price.Visibility = Visibility.Collapsed;
             }
         }
 
@@ -52,14 +56,13 @@ namespace CoputerShop.Pages
 
                 for (int i = 0; i < productsInCart.Count; i++)
                 {
-
-                    CountGood += 1;
+                    CountGood += productsInCart[i].sell_product_count;
                 }
 
                 if (productsInCart.Count > 0)
                 {
-                    //Stat.Content = $"В вашей корзине {productsInCart.Count} товаров. Ваш номер: {Num}";
-                    //OrderMake.IsEnabled = true;
+                    l_count.Content = $"В вашей корзине {CountGood} товаров.\nВаш номер: {Num}";
+                    b_done.IsEnabled = true;
 
                     double r = 0;
                     double w = 0;
@@ -74,13 +77,13 @@ namespace CoputerShop.Pages
                         w += p.product_wholesale_price * c.sell_product_count;
                     }
 
-                    l_retail_price.Content = $"Сумма по розничной цене: {r} руб.";
-                    l_whole_price.Content = $"Сумма по оптовой цене: {w} руб.";
+                    l_retail_price.Content = $"Сумма к оплате по розничной цене:\n{r} руб.";
+                    l_whole_price.Content = $"Сумма к оплате по оптовой цене:\n{w} руб.";
                 }
                 else
                 {
-                    //Stat.Content = "Ваша корзина пуста.";
-                    //OrderMake.IsEnabled = false;
+                    l_count.Content = "Ваша корзина пуста.";
+                    b_done.IsEnabled = false;
                 }
             }
 
@@ -192,31 +195,25 @@ namespace CoputerShop.Pages
             {
                 try
                 {
-                    AppConnect.entities.Orders.Remove(_curCart);
+                    _curCart.order_status_id = 2;
+                    _curCart.order_clossing_date = DateTime.Now;
+
+                    Changelogs changelogs = new Changelogs()
+                    {
+                        changelog_user_id = user.id_user,
+                        changelog_message = $"Пользователь завершил заказ {_curCart.id_order}:{_curCart.order_indification_number}",
+                        changelog_date = DateTime.Now
+                    };
+
+                    AppConnect.entities.Changelogs.Add(changelogs);
+
                     AppConnect.entities.SaveChanges();
                     MessageBox.Show("Заказ успешно завершён.", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("", "", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show($"Ошибка при внесении данных:\n{ex}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
-            }
-        }
-
-        private void logs_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                Changelogs changelogs = new Changelogs();
-                changelogs.changelog_user_id = user.id_user;
-                changelogs.changelog_message = "???";
-                changelogs.changelog_date = DateTime.Now;
-                AppConnect.entities.Changelogs.Add(changelogs);
-                AppConnect.entities.SaveChanges();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"{ex}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }

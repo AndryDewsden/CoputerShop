@@ -55,16 +55,30 @@ namespace CoputerShop.Pages
                 default:
                     break;
             }
-            
-            c_filter.ItemsSource = new filt[]
-            {
 
-            };
+            //c_filter.ItemsSource = new filt[]
+            //{
+            //    new filt { Name_filter = "Обыкновенно"},
+            //    new filt { Name_filter = "Мониторы"},
+            //    new filt { Name_filter = "Системный блок"},
+            //    new filt { Name_filter = ""}
+
+            //};
+
+            c_filter.Items.Add("");
+            for (int i = 0; i < AppConnect.entities.ProductTypes.Count(); i++)
+            {
+                c_filter.Items.Add(AppConnect.entities.ProductTypes.ToList()[i]);
+            }
             c_filter.SelectedIndex = 0;
 
             c_sorter.ItemsSource = new sort[]
             {
-
+                new sort { Name_sorter = "Обыкновенно"},
+                new sort { Name_sorter = "К большему по розничной"},
+                new sort { Name_sorter = "К меньшему по розничной"},
+                new sort { Name_sorter = "К большему по оптовой"},
+                new sort { Name_sorter = "К меньшему по оптовой"}
             };
             c_sorter.SelectedIndex = 0;
 
@@ -94,19 +108,28 @@ namespace CoputerShop.Pages
 
             if(c_filter.SelectedIndex > 0)
             {
-
+                //pro = pro.Where(x => x.product_type_id == AppConnect.entities.ProductTypes.FirstOrDefault(y => y.product_type_name == c_filter.Text).id_product_type).ToList();
             }
 
-            if(c_sorter.SelectedIndex > 0)
+            if (c_sorter.SelectedIndex > 0)
             {
-
-            }
-
-            var p = AppConnect.entities.Orders.FirstOrDefault(x => x.order_user_id == user.id_user && x.order_status_id != 2 && x.order_status_id != 3).id_order;
-            var d = AppConnect.entities.Sells.Where(x => x.sell_order_id == p).ToList();
-            for(int i = 0; i < d.Count(); i++)
-            {
-                
+                switch (c_filter.SelectedIndex)
+                {
+                    case 1:
+                        pro = pro.OrderBy(x => x.product_retail_price).ToList();
+                        break;
+                    case 2:
+                        pro = pro.OrderByDescending(x => x.product_retail_price).ToList();
+                        break;
+                    case 3:
+                        pro = pro.OrderBy(x => x.product_wholesale_price).ToList();
+                        break;
+                    case 4:
+                        pro = pro.OrderByDescending(x => x.product_wholesale_price).ToList();
+                        break;
+                    default:
+                        break;
+                }
             }
 
             return pro.ToArray();
@@ -152,13 +175,14 @@ namespace CoputerShop.Pages
                     {
                         AppConnect.entities.Products.Remove(product);
 
-                        //Changelogs changelogs = new Changelogs();
-                        //changelogs.changelog_user_id = user.id_user;
-                        //changelogs.changelog_message = "";
-                        //changelogs.changelog_date = DateTime.Now;
+                        Changelogs changelogs = new Changelogs()
+                        {
+                            changelog_user_id = user.id_user,
+                            changelog_message = $"Удалил товар {product.id_product}:{product.product_name}",
+                            changelog_date = DateTime.Now
+                        };
 
                         //AppConnect.entities.Changelogs.Add(changelogs);
-
 
                         AppConnect.entities.SaveChanges();
                         MessageBox.Show("Товар успешно удалён.", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -285,69 +309,7 @@ namespace CoputerShop.Pages
             }
             else
             {
-                MessageBox.Show("Этот товар уже есть в корзине!", "Уведомление", MessageBoxButton.OK);
-            }
-        }
-
-        private void b_less_Click(object sender, RoutedEventArgs e)
-        {
-            if (l_productList.SelectedItem != null)
-            {
-                Products pro = (Products)l_productList.SelectedItem;
-                Sells prof = AppConnect.entities.Sells.FirstOrDefault(x => x.sell_product_id == pro.id_product && x.sell_order_id == AppConnect.entities.Orders.FirstOrDefault(y => y.order_user_id == user.id_user).id_order);
-                if (prof.sell_product_count > 1)
-                {
-                    try
-                    {
-                        prof.sell_product_count--;
-
-                        AppConnect.entities.SaveChanges();
-                        MessageBox.Show("Товар успешно уменьшил своё количество", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show($"Ошибка при изменении данных (-):\n{ex}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("Вы не можете уменьшить минимальное количество этого товара", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Warning);
-                }
-            }
-            else
-            {
-                MessageBox.Show("Выберите товар", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Warning);
-            }
-        }
-
-        private void b_more_Click(object sender, RoutedEventArgs e)
-        {
-            if (l_productList.SelectedItem != null)
-            {
-                Products pro = (Products)l_productList.SelectedItem;
-                Sells prof = AppConnect.entities.Sells.FirstOrDefault(x => x.sell_product_id == pro.id_product && x.sell_order_id == AppConnect.entities.Orders.FirstOrDefault(y => y.order_user_id == user.id_user).id_order);
-                if (prof.sell_product_count < 99)
-                {
-                    try
-                    {
-                        prof.sell_product_count++;
-
-                        AppConnect.entities.SaveChanges();
-                        MessageBox.Show("Товар успешно уменьшил своё количество", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show($"Ошибка при изменении данных (-):\n{ex}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("Вы не можете увеличить максимальное количество этого товара", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Warning);
-                }
-            }
-            else
-            {
-                MessageBox.Show("Выберите товар", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Этот товар уже есть в вашей корзине!", "Уведомление", MessageBoxButton.OK);
             }
         }
     }

@@ -23,6 +23,31 @@ namespace CoputerShop.Pages
         {
             InitializeComponent();
             user = use;
+            Title = $"Личная страница {use.user_name}";
+
+            switch(user.user_role_id)
+            {
+                case 1:
+                    c_list_chose.IsEnabled = false;
+                    c_list_chose.Visibility = Visibility.Collapsed;
+                    t_searcher.IsEnabled = false;
+                    t_searcher.Visibility = Visibility.Collapsed;
+                    break;
+                case 2:
+                    c_list_chose.IsEnabled = true;
+                    c_list_chose.Visibility = Visibility.Visible;
+                    t_searcher.IsEnabled = true;
+                    t_searcher.Visibility = Visibility.Collapsed;
+                    break;
+                case 3:
+                    c_list_chose.IsEnabled = true;
+                    c_list_chose.Visibility = Visibility.Visible;
+                    t_searcher.IsEnabled = true;
+                    t_searcher.Visibility = Visibility.Visible;
+                    break;
+                default:
+                    break;
+            }
 
             c_list_chose.Items.Add("Пользователи");
             c_list_chose.Items.Add("Заказы");
@@ -56,9 +81,8 @@ namespace CoputerShop.Pages
             c_order_status.Items.Add("Заморожен");
             c_order_status.SelectedIndex = 0;
 
-            c_log_date.Items.Add("По очереди");
-            c_log_date.Items.Add("По возрастающей");
-            c_log_date.Items.Add("По убывающей");
+            c_log_date.Items.Add("Старые");
+            c_log_date.Items.Add("Новые");
             c_log_date.SelectedIndex = 0;
         }
 
@@ -80,11 +104,9 @@ namespace CoputerShop.Pages
                 switch(c_log_date.SelectedIndex)
                 {
                     case 0:
-                        break;
-                    case 1:
                         logs = logs.OrderBy(x => x.changelog_date).ToList();
                         break;
-                    case 2:
+                    case 1:
                         logs = logs.OrderByDescending(x => x.changelog_date).ToList();
                         break;
                     default:
@@ -307,7 +329,7 @@ namespace CoputerShop.Pages
                     c_user_role.IsEnabled = false;
                     c_user_role.Visibility = Visibility.Collapsed;
                     c_log_date.IsEnabled = false;
-                    c_log_date.Visibility = Visibility.Visible;
+                    c_log_date.Visibility = Visibility.Collapsed;
                     c_order_date.IsEnabled = false;
                     c_order_date.Visibility = Visibility.Collapsed;
                     c_order_status.IsEnabled = false;
@@ -421,6 +443,16 @@ namespace CoputerShop.Pages
         private void c_log_date_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             l_log_list.ItemsSource = FindLogs();
+        }
+
+        private void b_exit_Click(object sender, RoutedEventArgs e)
+        {
+            var a = MessageBox.Show("Вы действительно хотите выйти?", "Уведомление", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            if (a == MessageBoxResult.Yes)
+            {
+                AppFrame.frameMain.Navigate(new Autorisation());
+            }
         }
     }
 }

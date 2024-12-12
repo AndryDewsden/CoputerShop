@@ -9,17 +9,18 @@
       Title="Регистрация">
 
     <Grid>
-        <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Top">
             <Label Content="ФИО:" Width="200" Height="30" Margin="0,5"/>
             <TextBox x:Name="name_box" Width="200" Height="30" Margin="0,5"/>
             <Label Content="Логин:" Width="200" Height="30" Margin="0,5"/>
             <TextBox x:Name="login_box" Width="200" Height="30" Margin="0,5"/>
             <Label Content="Пароль:" Width="200" Height="30" Margin="0,5"/>
-            <PasswordBox x:Name="pass_one_box" Width="200" Height="30" Margin="0,5"/>
+            <PasswordBox x:Name="pass_one_box" Width="200" Height="30" Margin="0,5" PasswordChanged="pass_one_box_PasswordChanged"/>
             <Label Content="Повторите пароль:" Width="200" Height="30" Margin="0,5"/>
-            <PasswordBox x:Name="pass_two_box" Width="200" Height="30" Margin="0,5"/>
-            <Button x:Name="reg_b" Content="Зарегестрироваться" Width="200" Height="30" Margin="0,5"/>
-            <Button x:Name="back_b" Content="Назад" Width="200" Height="30" Margin="0,5"/>
+            <PasswordBox x:Name="pass_two_box" Width="200" Height="30" Margin="0,5" PasswordChanged="pass_two_box_PasswordChanged"/>
+            <Button x:Name="reg_b" Content="Зарегестрироваться" Width="200" Height="30" Margin="0,5" Click="reg_b_Click"/>
+            <Button x:Name="back_b" Content="Назад" Width="200" Height="30" Margin="0,5" Click="back_b_Click"/>
+            <Label x:Name="t_warm" Margin="5" Width="400" Height="30" HorizontalAlignment="Center"/>
         </StackPanel>
     </Grid>
 </Page>

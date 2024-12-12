@@ -15,7 +15,7 @@
         </Grid.ColumnDefinitions>
 
         <Grid Grid.Column="0">
-            <StackPanel Orientation="Vertical" Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <StackPanel Orientation="Vertical" Margin="5" HorizontalAlignment="Center" VerticalAlignment="Top">
                 <Button x:Name="b_user" Content="Пользователь" Width="200" Height="30" Margin="5" Click="b_user_Click"/>
                 <Button x:Name="b_shop" Content="Магазин" Width="200" Height="30" Margin="5" Click="b_shop_Click"/>
                 <Button x:Name="b_add" Content="Добавить" Width="200" Height="30" Margin="5" Click="b_add_Click"/>
@@ -30,33 +30,37 @@
             </Grid.ColumnDefinitions>
 
             <Grid Grid.Column="0">
-                <StackPanel Orientation="Vertical">
-                    <Label Content="Наименование" Width="200" Height="30" Margin="5"/>
-                    <TextBox x:Name="t_name" Text="{Binding product_name}" Width="200" Height="30" Margin="5"/>
-                    <Label Content="Описание" Width="200" Height="30" Margin="5"/>
-                    <TextBox x:Name="t_desc" Text="{Binding product_description}" Width="200" Height="30" Margin="5"/>
-                    <Label Content="Розничная цена" Width="200" Height="30" Margin="5"/>
-                    <TextBox x:Name="t_retail" Text="{Binding product_retail_price}" Width="200" Height="30" Margin="5" TextInput="t_retail_TextInput"/>
-                    <Label Content="Оптовая цена" Width="200" Height="30" Margin="5"/>
-                    <TextBox x:Name="t_whole" Text="{Binding product_wholesale_price}" Width="200" Height="30" Margin="5" TextInput="t_whole_TextInput"/>
-                    <Label Content="Изображение" Width="200" Height="30" Margin="5"/>
-                    <TextBox x:Name="t_image" Text="{Binding product_image}" Width="200" Height="30" Margin="5"/>
-                    <Button x:Name="b_image" Content="Применить изображение" Width="200" Height="30" Margin="5"/>
-                </StackPanel>
+                <Border BorderThickness="1" BorderBrush="Black" Margin="5" CornerRadius="15" Width="260" Height="480" VerticalAlignment="Top">
+                    <StackPanel Orientation="Vertical">
+                        <Label Content="Наименование" Width="200" Height="30" Margin="5"/>
+                        <TextBox x:Name="t_name" Text="{Binding product_name}" Width="200" Height="30" Margin="5"/>
+                        <Label Content="Описание" Width="200" Height="30" Margin="5"/>
+                        <TextBox x:Name="t_desc" Text="{Binding product_description}" Width="200" Height="30" Margin="5"/>
+                        <Label Content="Розничная цена" Width="200" Height="30" Margin="5"/>
+                        <TextBox x:Name="t_retail" Text="{Binding product_retail_price}" Width="200" Height="30" Margin="5" PreviewTextInput="t_retail_PreviewTextInput"/>
+                        <Label Content="Оптовая цена" Width="200" Height="30" Margin="5"/>
+                        <TextBox x:Name="t_whole" Text="{Binding product_wholesale_price}" Width="200" Height="30" Margin="5" PreviewTextInput="t_whole_PreviewTextInput"/>
+                        <Label Content="Изображение" Width="200" Height="30" Margin="5"/>
+                        <TextBox x:Name="t_image" Text="{Binding product_image}" Width="200" Height="30" Margin="5"/>
+                        <Button x:Name="b_image" Content="Применить изображение" Width="200" Height="30" Margin="5"/>
+                    </StackPanel>
+                </Border>
             </Grid>
 
             <Grid Grid.Column="1">
-                <StackPanel Orientation="Vertical">
-                    <Label Content="Тип товара" Width="200" Height="30" Margin="5"/>
-                    <ComboBox x:Name="c_type" SelectedIndex="{Binding product_type_id}" DisplayMemberPath="product_type_name" Width="200" Height="30" Margin="5"/>
-                    <Label Content="Производитель" Width="200" Height="30" Margin="5"/>
-                    <ComboBox x:Name="c_creator" SelectedIndex="{Binding product_creator_id}" DisplayMemberPath="product_creator_name" Width="200" Height="30" Margin="5"/>
-                    <Label Content="Поставщик" Width="200" Height="30" Margin="5"/>
-                    <ComboBox x:Name="c_seller" SelectedIndex="{Binding product_seller_id}" DisplayMemberPath="product_seller_name" Width="200" Height="30" Margin="5"/>
-                    <Label Content="Статус" Width="200" Height="30" Margin="5"/>
-                    <ComboBox x:Name="c_status" SelectedIndex="{Binding product_status_id}" DisplayMemberPath="product_status_name" Width="200" Height="30" Margin="5"/>
-                    <Image x:Name="i_good" Width="200" Height="200" Margin="5"/>
-                </StackPanel>
+                <Border BorderThickness="1" BorderBrush="Black" Margin="5" CornerRadius="15" Width="260" Height="480" VerticalAlignment="Top">
+                    <StackPanel Orientation="Vertical">
+                        <Label Content="Тип товара" Width="200" Height="30" Margin="5"/>
+                        <ComboBox x:Name="c_type" SelectedIndex="{Binding product_type_id}" DisplayMemberPath="product_type_name" Width="200" Height="30" Margin="5"/>
+                        <Label Content="Производитель" Width="200" Height="30" Margin="5"/>
+                        <ComboBox x:Name="c_creator" SelectedIndex="{Binding product_creator_id}" DisplayMemberPath="product_creator_name" Width="200" Height="30" Margin="5"/>
+                        <Label Content="Поставщик" Width="200" Height="30" Margin="5"/>
+                        <ComboBox x:Name="c_seller" SelectedIndex="{Binding product_seller_id}" DisplayMemberPath="product_seller_name" Width="200" Height="30" Margin="5"/>
+                        <Label Content="Статус" Width="200" Height="30" Margin="5"/>
+                        <ComboBox x:Name="c_status" SelectedIndex="{Binding product_status_id}" DisplayMemberPath="product_status_name" Width="200" Height="30" Margin="5"/>
+                        <Image x:Name="i_good" Width="200" Height="200" Margin="5"/>
+                    </StackPanel>
+                </Border>
             </Grid>
         </Grid>
     </Grid>

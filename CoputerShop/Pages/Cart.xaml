@@ -15,18 +15,18 @@
         </Grid.ColumnDefinitions>
 
         <Grid Grid.Column="0">
-            <StackPanel>
-                <Button x:Name="b_user" Content="Пользователь" Width="200" Height="30" Margin="5" Click="b_user_Click"/>
-                <Button x:Name="b_shop" Content="Магазин" Width="200" Height="30" Margin="5" Click="b_shop_Click"/>
-                <Label Margin="5" x:Name="l_whole_price" Width="200" Height="30"/>
-                <Label Margin="5" x:Name="l_retail_price" Width="200" Height="30"/>
-                <Button x:Name="b_done" Content="Оплатить" Width="200" Height="30" Margin="5" Click="b_done_Click"/>
-                <Button x:Name="logs" Content="Логи" Width="200" Height="30" Margin="5" Click="logs_Click"/>
+            <StackPanel Margin="5">
+                <Button x:Name="b_user" Content="Пользователь" Width="220" Height="30" Margin="5" Click="b_user_Click"/>
+                <Button x:Name="b_shop" Content="Магазин" Width="220" Height="30" Margin="5" Click="b_shop_Click"/>
+                <Label Margin="5" x:Name="l_count" Width="220" Height="40"/>
+                <Label Margin="5" x:Name="l_whole_price" Width="220" Height="40"/>
+                <Label Margin="5" x:Name="l_retail_price" Width="220" Height="40"/>
+                <Button x:Name="b_done" Content="Оплатить" Width="220" Height="30" Margin="5" Click="b_done_Click"/>
             </StackPanel>
         </Grid>
         
         <Grid Grid.Column="1">
-            <ListView x:Name="l_cartList" Margin="5" Width="710" Height="440" VerticalAlignment="Top">
+            <ListView x:Name="l_cartList" Margin="5" Width="700" Height="440" VerticalAlignment="Top">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <Border BorderThickness="1" BorderBrush="Black" CornerRadius="25">
@@ -100,10 +100,10 @@
 
                                 <StackPanel Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Vertical">
                                     <Button x:Name="b_del_from_cart" Content="Убрать из корзины" Width="140" Height="30" Margin="5" Click="b_del_from_cart_Click"/>
-                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                                         <Button x:Name="b_less" Content="-" Width="30" Height="30" Margin="5" Click="b_less_Click"/>
-                                        <TextBlock Margin="5" VerticalAlignment="Center" Width="30" Height="30" HorizontalAlignment="Center">
-                                            <Run Text="{Binding sell_product_count}"/>
+                                        <TextBlock Margin="5" VerticalAlignment="Center" Width="30" Height="30" HorizontalAlignment="Center" TextAlignment="Center">
+                                            <Run Text="{Binding sell_product_count}" FontSize="20px" FontWeight="Bold"/>
                                         </TextBlock>
                                         <Button x:Name="b_more" Content="+" Width="30" Height="30" Margin="5" Click="b_more_Click"/>
                                     </StackPanel>
