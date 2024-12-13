@@ -6,6 +6,8 @@
 
 ![image](https://github.com/user-attachments/assets/64609b0a-21e1-47e7-bc09-2ff362fd0bda)
 
+![image](https://github.com/user-attachments/assets/f4cbb0e3-7fcf-4677-8a1f-78daed455132)
+
 # Приложение
 
 Авторизация:
