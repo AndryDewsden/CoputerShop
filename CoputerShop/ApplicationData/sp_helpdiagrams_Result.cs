@@ -10,12 +10,13 @@
 namespace CoputerShop.ApplicationData
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class Changelogs
+    public partial class sp_helpdiagrams_Result
     {
-        public int id_changelog { get; set; }
-        public string changelog_message { get; set; }
-        public System.DateTime changelog_date { get; set; }
+        public string Database { get; set; }
+        public string Name { get; set; }
+        public int ID { get; set; }
+        public string Owner { get; set; }
+        public int OwnerID { get; set; }
     }
 }

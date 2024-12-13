@@ -17,7 +17,6 @@ namespace CoputerShop.ApplicationData
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Users()
         {
-            this.Changelogs = new HashSet<Changelogs>();
             this.Orders = new HashSet<Orders>();
         }
     
@@ -27,8 +26,6 @@ namespace CoputerShop.ApplicationData
         public string user_password { get; set; }
         public int user_role_id { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Changelogs> Changelogs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Orders> Orders { get; set; }
         public virtual UserRoles UserRoles { get; set; }

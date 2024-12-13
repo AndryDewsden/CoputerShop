@@ -41,6 +41,22 @@ namespace CoputerShop.Pages
                 l_retail_price.Visibility = Visibility.Collapsed;
                 l_whole_price.Visibility = Visibility.Collapsed;
             }
+
+            switch(user.user_role_id)
+            {
+                case 1:
+                    b_user.IsEnabled = false;
+                    b_user.Visibility = Visibility.Collapsed;
+                    break;
+                case 2:
+                    b_user.IsEnabled = true;
+                    b_user.Visibility = Visibility.Visible;
+                    break;
+                case 3:
+                    b_user.IsEnabled = true;
+                    b_user.Visibility = Visibility.Visible;
+                    break;
+            }
         }
 
         public Sells[] FillCart()
@@ -200,8 +216,7 @@ namespace CoputerShop.Pages
 
                     Changelogs changelogs = new Changelogs()
                     {
-                        changelog_user_id = user.id_user,
-                        changelog_message = $"Пользователь завершил заказ {_curCart.id_order}:{_curCart.order_indification_number}",
+                        changelog_message = $"Пользователь: {user.id_user}:{user.user_login} завершил заказ {_curCart.id_order}:{_curCart.order_indification_number}",
                         changelog_date = DateTime.Now
                     };
 
@@ -214,6 +229,15 @@ namespace CoputerShop.Pages
                 {
                     MessageBox.Show($"Ошибка при внесении данных:\n{ex}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
+            }
+        }
+
+        private void b_exit_Click(object sender, RoutedEventArgs e)
+        {
+            var a = MessageBox.Show("Вы действительно хотите выйти?", "Уведомление", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (a == MessageBoxResult.Yes)
+            {
+                AppFrame.frameMain.Navigate(new Autorisation());
             }
         }
     }

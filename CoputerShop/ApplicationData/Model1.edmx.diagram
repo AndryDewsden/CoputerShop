@@ -4,8 +4,8 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="9d13367b1c984c46bd904e355d741211" Name="Diagram1">
-        <EntityTypeShape EntityType="ComputerShopModel.Changelogs" Width="1.5" PointX="3" PointY="10.125" IsExpanded="true" />
+      <Diagram DiagramId="36d238576d8949b8a9b3e686c4a0e4a1" Name="Diagram1">
+        <EntityTypeShape EntityType="ComputerShopModel.Changelogs" Width="1.5" PointX="2.75" PointY="5.75" IsExpanded="true" />
         <EntityTypeShape EntityType="ComputerShopModel.Orders" Width="1.5" PointX="3" PointY="13.5" IsExpanded="true" />
         <EntityTypeShape EntityType="ComputerShopModel.OrderStatuses" Width="1.5" PointX="0.75" PointY="12.5" IsExpanded="true" />
         <EntityTypeShape EntityType="ComputerShopModel.ProductCreators" Width="1.5" PointX="0.75" PointY="2.125" IsExpanded="true" />
@@ -14,10 +14,9 @@
         <EntityTypeShape EntityType="ComputerShopModel.ProductStatuses" Width="1.5" PointX="0.75" PointY="7.625" IsExpanded="true" />
         <EntityTypeShape EntityType="ComputerShopModel.ProductTypes" Width="1.5" PointX="0.75" PointY="10" IsExpanded="true" />
         <EntityTypeShape EntityType="ComputerShopModel.Sells" Width="1.5" PointX="5.25" PointY="1.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ComputerShopModel.sysdiagrams" Width="1.5" PointX="2.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ComputerShopModel.sysdiagrams" Width="1.5" PointX="4.75" PointY="5.75" IsExpanded="true" />
         <EntityTypeShape EntityType="ComputerShopModel.UserRoles" Width="1.5" PointX="1.5" PointY="18.25" IsExpanded="true" />
         <EntityTypeShape EntityType="ComputerShopModel.Users" Width="1.5" PointX="0.75" PointY="14.875" IsExpanded="true" />
-        <AssociationConnector Association="ComputerShopModel.FK_Changelogs_Users" ManuallyRouted="false" />
         <AssociationConnector Association="ComputerShopModel.FK_Orders_OrderStatuses" ManuallyRouted="false" />
         <AssociationConnector Association="ComputerShopModel.FK_Orders_Users" ManuallyRouted="false" />
         <AssociationConnector Association="ComputerShopModel.FK_Sells_Orders" ManuallyRouted="false" />

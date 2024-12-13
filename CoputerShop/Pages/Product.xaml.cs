@@ -35,6 +35,9 @@ namespace CoputerShop.Pages
                     b_red.IsEnabled = false;
                     b_del.Visibility = Visibility.Collapsed;
                     b_del.IsEnabled = false;
+
+                    b_user.IsEnabled = false;
+                    b_user.Visibility = Visibility.Collapsed;
                     break;
                 case 2:
                     b_add.Visibility = Visibility.Visible;
@@ -43,6 +46,9 @@ namespace CoputerShop.Pages
                     b_red.IsEnabled = true;
                     b_del.Visibility = Visibility.Visible;
                     b_del.IsEnabled = true;
+
+                    b_user.IsEnabled = true;
+                    b_user.Visibility = Visibility.Visible;
                     break;
                 case 3:
                     b_add.Visibility = Visibility.Visible;
@@ -51,6 +57,9 @@ namespace CoputerShop.Pages
                     b_red.IsEnabled = true;
                     b_del.Visibility = Visibility.Visible;
                     b_del.IsEnabled = true;
+
+                    b_user.IsEnabled = true;
+                    b_user.Visibility = Visibility.Visible;
                     break;
                 default:
                     break;
@@ -62,7 +71,6 @@ namespace CoputerShop.Pages
             //    new filt { Name_filter = "Мониторы"},
             //    new filt { Name_filter = "Системный блок"},
             //    new filt { Name_filter = ""}
-
             //};
 
             c_filter.Items.Add("");
@@ -108,13 +116,15 @@ namespace CoputerShop.Pages
 
             if(c_filter.SelectedIndex > 0)
             {
-                //pro = pro.Where(x => x.product_type_id == AppConnect.entities.ProductTypes.FirstOrDefault(y => y.product_type_name == c_filter.Text).id_product_type).ToList();
+                pro = pro.Where(x => x.product_type_id == c_filter.SelectedIndex).ToList();
             }
 
             if (c_sorter.SelectedIndex > 0)
             {
-                switch (c_filter.SelectedIndex)
+                switch (c_sorter.SelectedIndex)
                 {
+                    case 0:
+                        break;
                     case 1:
                         pro = pro.OrderBy(x => x.product_retail_price).ToList();
                         break;
@@ -177,12 +187,11 @@ namespace CoputerShop.Pages
 
                         Changelogs changelogs = new Changelogs()
                         {
-                            changelog_user_id = user.id_user,
-                            changelog_message = $"Удалил товар {product.id_product}:{product.product_name}",
+                            changelog_message = $"Пользователь: {user.id_user}:{user.user_login} успешно удалил товар {product.id_product}:{product.product_name}",
                             changelog_date = DateTime.Now
                         };
 
-                        //AppConnect.entities.Changelogs.Add(changelogs);
+                        AppConnect.entities.Changelogs.Add(changelogs);
 
                         AppConnect.entities.SaveChanges();
                         MessageBox.Show("Товар успешно удалён.", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -199,14 +208,13 @@ namespace CoputerShop.Pages
             }
         }
 
-        private void b_france_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private void b_exit_Click(object sender, RoutedEventArgs e)
         {
-            AppFrame.frameMain.Navigate(new Autorisation());
+            var a = MessageBox.Show("Вы действительно хотите выйти?", "Уведомление", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (a == MessageBoxResult.Yes)
+            {
+                AppFrame.frameMain.Navigate(new Autorisation());
+            }
         }
 
         private void t_searcher_t_TextChanged(object sender, TextChangedEventArgs e)

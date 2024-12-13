@@ -30,7 +30,7 @@
             </Grid.RowDefinitions>
 
             <StackPanel Grid.Row="0" Orientation="Horizontal">
-                <TextBox x:Name="t_searcher" Margin="5" Height="30" Width="300" HorizontalAlignment="Left" VerticalAlignment="Center" TextChanged="t_searcher_TextChanged"/>
+                <TextBox x:Name="t_searcher" Margin="5" Height="30" Width="300" HorizontalAlignment="Left" VerticalAlignment="Center" TextChanged="t_searcher_TextChanged" IsEnabled="False" Visibility="Collapsed"/>
                 
                 <ComboBox x:Name="c_user_role" Margin="5" Height="30" Width="200" IsEnabled="False" Visibility="Collapsed" SelectionChanged="c_user_role_SelectionChanged"/>
                 <ComboBox x:Name="c_user_alp" Margin="5" Height="30" Width="200" IsEnabled="False" Visibility="Collapsed" SelectionChanged="c_user_alp_SelectionChanged"/>
@@ -43,170 +43,216 @@
                 <ComboBox x:Name="c_log_date" Margin="5" Height="30" Width="200" IsEnabled="False" Visibility="Collapsed" SelectionChanged="c_log_date_SelectionChanged"/>
             </StackPanel>
             
-            <StackPanel x:Name="s_users" Grid.Row="1" Visibility="Collapsed">
-                <ListView x:Name="l_user_list" Margin="5" Width="500" Height="480" VerticalAlignment="Top" HorizontalAlignment="Left">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="160"/>
-                                    <ColumnDefinition Width="160"/>
-                                    <ColumnDefinition Width="160"/>
-                                </Grid.ColumnDefinitions>
+            <StackPanel x:Name="s_users" Grid.Row="1" Visibility="Collapsed" Orientation="Horizontal">
+                <Border BorderThickness="1" BorderBrush="Black" CornerRadius="15" Width="500" Height="440" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5,0,5,0">
+                    <ListView x:Name="l_user_list" Margin="5" Width="480" Height="420" SelectionChanged="l_user_list_SelectionChanged">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="150"/>
+                                        <ColumnDefinition Width="150"/>
+                                        <ColumnDefinition Width="150"/>
+                                    </Grid.ColumnDefinitions>
 
-                                <StackPanel Grid.Column="0">
-                                    <TextBlock>
+                                    <StackPanel Grid.Column="0">
+                                        <TextBlock>
                                         <Run Text="{Binding user_name}"/>
-                                    </TextBlock>    
-                                </StackPanel>
-                                
-                                <StackPanel Grid.Column="1">
-                                    <TextBlock>
-                                        <Run Text="{Binding user_login}"/>
-                                    </TextBlock>
-                                </StackPanel>
+                                        </TextBlock>
+                                    </StackPanel>
 
-                                <StackPanel Grid.Column="2">
-                                    <TextBlock>
+                                    <StackPanel Grid.Column="1">
+                                        <TextBlock>
+                                        <Run Text="{Binding user_login}"/>
+                                        </TextBlock>
+                                    </StackPanel>
+
+                                    <StackPanel Grid.Column="2">
+                                        <TextBlock>
                                         <Run Text="{Binding UserRoles.user_role_name}"/>
-                                    </TextBlock>
-                                </StackPanel>
-                            </Grid>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
+                                        </TextBlock>
+                                    </StackPanel>
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Border>
+
+                <Border BorderThickness="1" BorderBrush="Black" CornerRadius="15" Width="210" Height="390" VerticalAlignment="Top" Margin="5,0,0,0">
+                    <StackPanel Orientation="Vertical" Margin="5">
+                        <Label Content="Имя пользователя" Width="180" Height="30"/>
+                        <TextBox x:Name="t_user_name" Text="{Binding user_name}" Width="180" Height="30"/>
+                        <Label Content="Логин пользователя" Width="180" Height="30"/>
+                        <TextBox x:Name="t_user_login" Text="{Binding user_login}" Width="180" Height="30"/>
+                        <Label Content="Пароль пользователя" Width="180" Height="30"/>
+                        <TextBox x:Name="t_user_password" Text="{Binding user_password}" Width="180" Height="30"/>
+                        <Label Content="Роль пользователя" Width="180" Height="30"/>
+                        <ComboBox x:Name="t_user_role" Margin="5" Width="180" Height="30" SelectedIndex="{Binding user_role_id}" DisplayMemberPath="user_role_name"/>
+                        <Button x:Name="b_user_add" Content="Добавить" Margin="5" Width="180" Height="30" Click="b_user_add_Click"/>
+                        <Button x:Name="b_user_red" Content="Редактировать" Margin="5" Width="180" Height="30" Click="b_user_red_Click"/>
+                        <Button x:Name="b_user_del" Content="Удалить" Margin="5" Width="180" Height="30" Click="b_user_del_Click"/>
+                    </StackPanel>
+                </Border>
             </StackPanel>
 
-            <StackPanel x:Name="s_orders" Grid.Row="1" Visibility="Collapsed">
-                <ListView x:Name="l_order_list" Margin="5" Width="500" Height="480" VerticalAlignment="Top" HorizontalAlignment="Left">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="80"/>
-                                    <ColumnDefinition Width="100"/>
-                                    <ColumnDefinition Width="120"/>
-                                    <ColumnDefinition Width="120"/>
-                                    <ColumnDefinition Width="80"/>
-                                </Grid.ColumnDefinitions>
+            <StackPanel x:Name="s_orders" Grid.Row="1" Visibility="Collapsed" Orientation="Vertical">
+                <Border BorderThickness="1" BorderBrush="Black" CornerRadius="15" Width="720" Height="320" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5,0,0,5">
+                    <ListView x:Name="l_order_list" Margin="5" Width="700" Height="300" SelectionChanged="l_order_list_SelectionChanged">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="100"/>
+                                        <ColumnDefinition Width="100"/>
+                                        <ColumnDefinition Width="190"/>
+                                        <ColumnDefinition Width="190"/>
+                                        <ColumnDefinition Width="80"/>
+                                    </Grid.ColumnDefinitions>
 
-                                <StackPanel Grid.Column="0">
-                                    <TextBlock>
+                                    <StackPanel Grid.Column="0">
+                                        <TextBlock>
                                         <Run Text="{Binding Users.user_login}"/>
-                                    </TextBlock>
-                                </StackPanel>
+                                        </TextBlock>
+                                    </StackPanel>
 
-                                <StackPanel Grid.Column="1">
-                                    <TextBlock>
+                                    <StackPanel Grid.Column="1">
+                                        <TextBlock>
                                         <Run Text="{Binding order_indification_number}"/>
-                                    </TextBlock>
-                                </StackPanel>
+                                        </TextBlock>
+                                    </StackPanel>
 
-                                <StackPanel Grid.Column="2">
-                                    <TextBlock>
+                                    <StackPanel Grid.Column="2">
+                                        <TextBlock>
                                         <Run Text="{Binding order_creating_date}"/>
-                                    </TextBlock>
-                                </StackPanel>
+                                        </TextBlock>
+                                    </StackPanel>
 
-                                <StackPanel Grid.Column="3">
-                                    <TextBlock>
+                                    <StackPanel Grid.Column="3">
+                                        <TextBlock>
                                         <Run Text="{Binding order_clossing_date}"/>
-                                    </TextBlock>
-                                </StackPanel>
+                                        </TextBlock>
+                                    </StackPanel>
 
-                                <StackPanel Grid.Column="4">
-                                    <TextBlock>
+                                    <StackPanel Grid.Column="4">
+                                        <TextBlock>
                                         <Run Text="{Binding OrderStatuses.order_status_name}"/>
-                                    </TextBlock>
-                                </StackPanel>
-                            </Grid>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
+                                        </TextBlock>
+                                    </StackPanel>
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Border>
+
+                <Border BorderThickness="1" BorderBrush="Black" CornerRadius="15" Width="720" Height="110" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5,5,0,0">
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <StackPanel Orientation="Vertical" Margin="5">
+                            <Label Content="Пользователь" Width="120" Height="25"/>
+                            <Label x:Name="l_user_order" Width="120" Height="25"/>
+                            <Button x:Name="b_order_red" Width="120" Height="25" Content="Редактировать" Margin="0,5,0,0" Click="b_order_red_Click" IsEnabled="False"/>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Vertical" Margin="5">
+                            <Label Content="Индификационный номер" Width="180" Height="25"/>
+                            <TextBox x:Name="t_order_num" Width="180" Height="25"/>
+                            <Button x:Name="b_order_del" Width="120" Height="25" Content="Удалить" Margin="0,5,0,0" HorizontalAlignment="Left" Click="b_order_del_Click" IsEnabled="False"/>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Vertical" Margin="5">
+                            <Label Content="Дата создания" Width="100" Height="25"/>
+                            <DatePicker x:Name="d_order_start" Width="100" Height="25"/>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Vertical" Margin="5">
+                            <Label Content="Дата завершения" Width="100" Height="25"/>
+                            <DatePicker x:Name="d_order_end" Width="100" Height="25"/>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Vertical" Margin="5">
+                            <Label Content="Статус" Width="120" Height="25"/>
+                            <ComboBox x:Name="c_order_status_panel" Width="120" Height="25" DisplayMemberPath="order_status_name"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
             </StackPanel>
 
             <StackPanel x:Name="s_sells" Grid.Row="1" Visibility="Collapsed">
-                <ListView x:Name="l_sells_list" Margin="5" Width="500" Height="480" VerticalAlignment="Top" HorizontalAlignment="Left">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="110"/>
-                                    <ColumnDefinition Width="110"/>
-                                    <ColumnDefinition Width="110"/>
-                                    <ColumnDefinition Width="50"/>
-                                    <ColumnDefinition Width="78"/>
-                                </Grid.ColumnDefinitions>
+                <Border BorderThickness="1" BorderBrush="Black" CornerRadius="15" Width="520" Height="440" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5,0,0,0">
+                    <ListView x:Name="l_sells_list" Margin="5" Width="500" Height="420">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="110"/>
+                                        <ColumnDefinition Width="110"/>
+                                        <ColumnDefinition Width="110"/>
+                                        <ColumnDefinition Width="50"/>
+                                        <ColumnDefinition Width="78"/>
+                                    </Grid.ColumnDefinitions>
 
-                                <StackPanel Grid.Column="0">
-                                    <TextBlock>
+                                    <StackPanel Grid.Column="0">
+                                        <TextBlock>
                                         <Run Text="{Binding Orders.Users.user_login}"/>
-                                    </TextBlock>
-                                </StackPanel>
+                                        </TextBlock>
+                                    </StackPanel>
 
-                                <StackPanel Grid.Column="1">
-                                    <TextBlock>
+                                    <StackPanel Grid.Column="1">
+                                        <TextBlock>
                                         <Run Text="{Binding Orders.order_indification_number}"/>
-                                    </TextBlock>
-                                </StackPanel>
+                                        </TextBlock>
+                                    </StackPanel>
 
-                                <StackPanel Grid.Column="2">
-                                    <TextBlock>
+                                    <StackPanel Grid.Column="2">
+                                        <TextBlock>
                                         <Run Text="{Binding Products.product_name}"/>
-                                    </TextBlock>
-                                </StackPanel>
+                                        </TextBlock>
+                                    </StackPanel>
 
-                                <StackPanel Grid.Column="3">
-                                    <TextBlock>
+                                    <StackPanel Grid.Column="3">
+                                        <TextBlock>
                                         <Run Text="{Binding sell_product_count}"/>
-                                    </TextBlock>
-                                </StackPanel>
+                                        </TextBlock>
+                                    </StackPanel>
 
-                                <StackPanel Grid.Column="4">
-                                    <TextBlock>
+                                    <StackPanel Grid.Column="4">
+                                        <TextBlock>
                                         <Run Text="{Binding Orders.OrderStatuses.order_status_name}"/>
-                                    </TextBlock>
-                                </StackPanel>
-                            </Grid>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
+                                        </TextBlock>
+                                    </StackPanel>
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Border>
             </StackPanel>
 
             <StackPanel x:Name="s_logs" Grid.Row="1" Visibility="Collapsed">
-                <ListView x:Name="l_log_list" Margin="5" Width="700" Height="440" VerticalAlignment="Top" HorizontalAlignment="Left">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="80"/>
-                                    <ColumnDefinition Width="450"/>
-                                    <ColumnDefinition Width="130"/>
-                                </Grid.ColumnDefinitions>
+                <Border BorderThickness="1" BorderBrush="Black" CornerRadius="15" Width="700" Height="440" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5,0,0,0">
+                    <ListView x:Name="l_log_list" Width="680" Height="420">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="500"/>
+                                        <ColumnDefinition Width="140"/>
+                                    </Grid.ColumnDefinitions>
 
-                                <StackPanel Grid.Column="0" Orientation="Horizontal">
-                                    <TextBlock>
-                                        <Run Text="{Binding Users.id_user}"/>
-                                        <Run Text=":"/>
-                                        <Run Text="{Binding Users.user_name}"/>
-                                    </TextBlock>
-                                </StackPanel>
-
-                                <StackPanel Grid.Column="1">
-                                    <TextBlock>
+                                    <StackPanel Grid.Column="0">
+                                        <TextBlock>
                                         <Run Text="{Binding changelog_message}"/>
-                                    </TextBlock>
-                                </StackPanel>
+                                        </TextBlock>
+                                    </StackPanel>
 
-                                <StackPanel Grid.Column="2">
-                                    <TextBlock>
+                                    <StackPanel Grid.Column="1">
+                                        <TextBlock>
                                         <Run Text="{Binding changelog_date}"/>
-                                    </TextBlock>
-                                </StackPanel>
-                            </Grid>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
+                                        </TextBlock>
+                                    </StackPanel>
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Border>
             </StackPanel>
         </Grid>
     </Grid>

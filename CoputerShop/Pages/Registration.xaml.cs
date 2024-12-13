@@ -30,7 +30,7 @@ namespace CoputerShop.Pages
 
         private void reg_b_Click(object sender, RoutedEventArgs e)
         {
-            if(name_box.Text != null && login_box.Text != null && pass_one_box != null && pass_one_box.Password == pass_two_box.Password)
+            if(name_box.Text != "" && login_box.Text != "" && pass_one_box.Password != "" && pass_one_box.Password == pass_two_box.Password)
             {
                 if(AppConnect.entities.Users.FirstOrDefault(x => x.user_login == login_box.Text) == null)
                 {
@@ -50,8 +50,7 @@ namespace CoputerShop.Pages
 
                         Changelogs changelogs = new Changelogs()
                         {
-                            changelog_user_id = use.id_user,
-                            changelog_message = $"Пользователь {use.id_user}:{use.user_login} успешно зарегестрировался",
+                            changelog_message = $"Пользователь: {use.id_user}:{use.user_login} успешно зарегестрировался",
                             changelog_date = DateTime.Now
                         };
 

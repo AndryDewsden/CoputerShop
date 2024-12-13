@@ -25,7 +25,7 @@ namespace CoputerShop.Pages
 
         private void Enter_b_Click(object sender, RoutedEventArgs e)
         {
-            if(login_box != null && pass_box != null)
+            if(login_box.Text != "" && pass_box.Password != "")
             {
                 try
                 {
@@ -42,8 +42,7 @@ namespace CoputerShop.Pages
 
                                 changelogs = new Changelogs()
                                 {
-                                    changelog_user_id = us.id_user,
-                                    changelog_message = $"Пользователь {us.user_login}:{us.user_name} успешно вошёл в сеть",
+                                    changelog_message = $"Пользователь {us.id_user}:{us.user_login} успешно вошёл в сеть",
                                     changelog_date = DateTime.Now
                                 };
 
@@ -57,8 +56,7 @@ namespace CoputerShop.Pages
 
                                 changelogs = new Changelogs()
                                 {
-                                    changelog_user_id = us.id_user,
-                                    changelog_message = $"Менеджер {us.user_login}:{us.user_name} успешно вошёл в сеть",
+                                    changelog_message = $"Менеджер {us.id_user}:{us.user_login} успешно вошёл в сеть",
                                     changelog_date = DateTime.Now
                                 };
 
@@ -72,8 +70,7 @@ namespace CoputerShop.Pages
 
                                 changelogs = new Changelogs()
                                 {
-                                    changelog_user_id = us.id_user,
-                                    changelog_message = $"Администратор {us.user_login}:{us.user_name} успешно вошёл в сеть",
+                                    changelog_message = $"Администратор {us.id_user}:{us.user_login} успешно вошёл в сеть",
                                     changelog_date = DateTime.Now
                                 };
 

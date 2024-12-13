@@ -77,7 +77,7 @@ namespace CoputerShop.Pages
 
         private void b_add_Click(object sender, RoutedEventArgs e)
         {
-            if(t_name.Text != null && t_retail.Text != null && t_whole.Text != null && c_creator.SelectedIndex != 0 && c_seller.SelectedIndex != 0 && c_status.SelectedIndex != 0 && c_status.SelectedIndex != 0)
+            if(t_name.Text != "" && t_retail.Text != "" && t_whole.Text != "" && c_creator.SelectedIndex != 0 && c_seller.SelectedIndex != 0 && c_status.SelectedIndex != 0 && c_status.SelectedIndex != 0)
             {
                 try
                 {
@@ -97,8 +97,7 @@ namespace CoputerShop.Pages
                     {
                         Changelogs changelogs = new Changelogs()
                         {
-                            changelog_user_id = user.id_user,
-                            changelog_message = $"Добавил продукт {_curPro.id_product}:{_curPro.product_name}",
+                            changelog_message = $"Пользователь: {user.id_user}:{user.user_login} добавил продукт {_curPro.id_product}:{_curPro.product_name}",
                             changelog_date = DateTime.Now
                         };
                         
@@ -127,7 +126,7 @@ namespace CoputerShop.Pages
 
         private void b_red_Click(object sender, RoutedEventArgs e)
         {
-            if (t_name.Text != null && t_retail.Text != null && t_whole.Text != null && c_creator.SelectedIndex != 0 && c_seller.SelectedIndex != 0 && c_status.SelectedIndex != 0 && c_status.SelectedIndex != 0)
+            if (t_name.Text != "" && t_retail.Text != "" && t_whole.Text != "" && c_creator.SelectedIndex != 0 && c_seller.SelectedIndex != 0 && c_status.SelectedIndex != 0 && c_status.SelectedIndex != 0)
             {
                 try
                 {
@@ -135,8 +134,7 @@ namespace CoputerShop.Pages
                     {
                         Changelogs changelogs = new Changelogs()
                         {
-                            changelog_user_id = user.id_user,
-                            changelog_message = $"Изменил продукт {_curPro.id_product}:{_curPro.product_name}",
+                            changelog_message = $"Пользователь: {user.id_user}:{user.user_login} изменил продукт {_curPro.id_product}:{_curPro.product_name}",
                             changelog_date = DateTime.Now
                         };
                         
