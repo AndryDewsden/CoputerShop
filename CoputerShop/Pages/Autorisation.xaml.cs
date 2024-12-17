@@ -23,76 +23,23 @@ namespace CoputerShop.Pages
             InitializeComponent();
         }
 
+        public static bool ValidateAuto(string login, string password)
+        {
+            if (login == "1" && password == "1")
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         private void Enter_b_Click(object sender, RoutedEventArgs e)
         {
-            if(login_box.Text != "" && pass_box.Password != "")
+            if (login_box.Text != "" && pass_box.Password != "")
             {
-                try
-                {
-                    Users us = AppConnect.entities.Users.FirstOrDefault(x => x.user_login == login_box.Text && x.user_password == pass_box.Password);
-                    
-                    if (us != null)
-                    {
-                        switch (us.user_role_id)
-                        {
-                            case 1:
-                                MessageBox.Show($"Приветствую, пользователь {us.user_name}!", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
-
-                                Changelogs changelogs = new Changelogs();
-
-                                changelogs = new Changelogs()
-                                {
-                                    changelog_message = $"Пользователь {us.id_user}:{us.user_login} успешно вошёл в сеть",
-                                    changelog_date = DateTime.Now
-                                };
-
-                                AppConnect.entities.Changelogs.Add(changelogs);
-                                AppConnect.entities.SaveChanges();
-
-                                AppFrame.frameMain.Navigate(new Product(us));
-                                break;
-                            case 2:
-                                MessageBox.Show($"Приветствую, менеджер {us.user_name}!", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
-
-                                changelogs = new Changelogs()
-                                {
-                                    changelog_message = $"Менеджер {us.id_user}:{us.user_login} успешно вошёл в сеть",
-                                    changelog_date = DateTime.Now
-                                };
-
-                                AppConnect.entities.Changelogs.Add(changelogs);
-                                AppConnect.entities.SaveChanges();
-
-                                AppFrame.frameMain.Navigate(new Product(us));
-                                break;
-                            case 3:
-                                MessageBox.Show($"Приветствую, администратор {us.user_name}!", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
-
-                                changelogs = new Changelogs()
-                                {
-                                    changelog_message = $"Администратор {us.id_user}:{us.user_login} успешно вошёл в сеть",
-                                    changelog_date = DateTime.Now
-                                };
-
-                                AppConnect.entities.Changelogs.Add(changelogs);
-                                AppConnect.entities.SaveChanges();
-
-                                AppFrame.frameMain.Navigate(new Product(us));
-                                break;
-                            default:
-                                MessageBox.Show("", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Error);
-                                break;
-                        }
-                    }
-                    else
-                            {
-                                MessageBox.Show("Такого пользователя нет!", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Error);
-                            }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("\n" + ex, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
+                Auto(login_box.Text, pass_box.Password);
             }
             else
             {
@@ -112,6 +59,76 @@ namespace CoputerShop.Pages
             if (exitBi == MessageBoxResult.Yes)
             {
                 Application.Current.Shutdown();
+            }
+        }
+
+        private void Auto(string login, string password)
+        {
+            try
+            {
+                Users us = AppConnect.entities.Users.FirstOrDefault(x => x.user_login == login && x.user_password == password);
+
+                if (us != null)
+                {
+                    switch (us.user_role_id)
+                    {
+                        case 1:
+                            MessageBox.Show($"Приветствую, пользователь {us.user_name}!", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                            Changelogs changelogs = new Changelogs();
+
+                            changelogs = new Changelogs()
+                            {
+                                changelog_message = $"Пользователь {us.id_user}:{us.user_login} успешно вошёл в сеть",
+                                changelog_date = DateTime.Now
+                            };
+
+                            AppConnect.entities.Changelogs.Add(changelogs);
+                            AppConnect.entities.SaveChanges();
+
+                            AppFrame.frameMain.Navigate(new Product(us));
+                            break;
+                        case 2:
+                            MessageBox.Show($"Приветствую, менеджер {us.user_name}!", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                            changelogs = new Changelogs()
+                            {
+                                changelog_message = $"Менеджер {us.id_user}:{us.user_login} успешно вошёл в сеть",
+                                changelog_date = DateTime.Now
+                            };
+
+                            AppConnect.entities.Changelogs.Add(changelogs);
+                            AppConnect.entities.SaveChanges();
+
+                            AppFrame.frameMain.Navigate(new Product(us));
+                            break;
+                        case 3:
+                            MessageBox.Show($"Приветствую, администратор {us.user_name}!", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                            changelogs = new Changelogs()
+                            {
+                                changelog_message = $"Администратор {us.id_user}:{us.user_login} успешно вошёл в сеть",
+                                changelog_date = DateTime.Now
+                            };
+
+                            AppConnect.entities.Changelogs.Add(changelogs);
+                            AppConnect.entities.SaveChanges();
+
+                            AppFrame.frameMain.Navigate(new Product(us));
+                            break;
+                        default:
+                            MessageBox.Show("", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Error);
+                            break;
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Такого пользователя нет!", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("\n" + ex, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }

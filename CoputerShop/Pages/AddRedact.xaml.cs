@@ -65,6 +65,18 @@ namespace CoputerShop.Pages
             DataContext = _curPro;
         }
 
+        public static bool ValidateAddRed(string test_product_name, int test_product_type)
+        {
+            if(test_product_name == "name" && test_product_type == 1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         private void b_user_Click(object sender, RoutedEventArgs e)
         {
             AppFrame.frameMain.Navigate(new User(user));

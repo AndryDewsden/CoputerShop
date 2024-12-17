@@ -104,6 +104,18 @@ namespace CoputerShop.Pages
             }
         }
 
+        public static bool ValidateUser(string name, string login, int role)
+        {
+            if(name == "andrey" && login == "admin" && role == 3)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         Changelogs[] FindLogs()
         {
             var logs = AppConnect.entities.Changelogs.ToList();

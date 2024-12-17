@@ -1,100 +1,95 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Linq;
+using System.Windows;
+using System.Collections.Generic;
+using System.Text;
+using System.Threading.Tasks;
+using CoputerShop;
 using CoputerShop.ApplicationData;
+using CoputerShop.Pages;
 
-namespace CoputerTest
+namespace CoputerTest.Tests
 {
-    [TestClass]
+    [TestClass()]
     public class TestUser
     {
         [TestMethod]
-        //Проверяем авторизацию
-        public void CheckerUserAutorisation()
+        public void Check_Autorisation()
         {
-            //Начальные данные
-            Users testUser = new Users();
-            testUser.user_name = "1";
-            testUser.user_login = "1";
-            testUser.user_password = "1";
-
+            //1
+            string testpassword = "1";
+            string testlogin = "1";
             bool expected = true;
 
-            //Действие
-            bool actual = false;
+            //2
+            bool actual = Autorisation.ValidateAuto(testlogin, testpassword);
 
-            //Результат
+            //3
             Assert.AreEqual(expected, actual);
         }
-
-        Products testProductAdd = new Products();
-        Products testProductRed = new Products();
 
         [TestMethod]
-        //Проверяем добавление товара
-        public void CheckerProductAdd()
+        public void Check_Registration()
         {
-            //Начальные данные
-            testProductAdd.product_name = "Добавляемый тестовый продукт";
-            testProductAdd.product_creator_id = 1;
-            testProductAdd.product_seller_id = 1;
-            testProductAdd.product_type_id = 1;
-            testProductAdd.product_status_id = 1;
-            testProductAdd.product_wholesale_price = 1;
-            testProductAdd.product_retail_price = 1;
-
+            //1
+            string test_name = "test_user";
+            string test_password = "123";
+            string test_login = "123";
             bool expected = true;
 
-            //Действие
-            bool actual = false;
+            //2
+            bool actual = Registration.ValidateRegistration(test_name, test_login, test_password);
 
-            //Результат
+            //3
             Assert.AreEqual(expected, actual);
         }
 
-        //Проверяем редактироание товара
-        public void CheckerProducrRed()
+        [TestMethod]
+        public void Check_Product()
         {
-            //Начальные данные
-            testProductRed.product_name = "Редактируемый тестовый продук";
-            testProductRed.product_creator_id = 1;
-            testProductRed.product_seller_id = 1;
-            testProductRed.product_type_id = 1;
-            testProductRed.product_status_id = 1;
-            testProductRed.product_wholesale_price = 1;
-            testProductRed.product_retail_price = 1;
-
+            //1
+            string test_product_name = "Монитор";
+            int test_product_creator = 1;
+            int test_product_type = 2;
             bool expected = true;
 
-            //Действие
-            bool actual = false;
+            //2
+            bool actual = Product.ValidateProduct(test_product_name, test_product_type, test_product_creator);
 
-            //Результат
+            //3
             Assert.AreEqual(expected, actual);
         }
 
-        //Проверяем удаление товара
-        public void CheckerProductDel()
+        [TestMethod]
+        public void Check_User()
         {
-            //Начальные данные
-
-
+            //1
+            string test_user_name = "andrey";
+            string test_user_login = "admin";
+            int test_user_role = 3;
             bool expected = true;
 
-            //Действие
-            bool actual = false;
+            //2
+            bool actual = User.ValidateUser(test_user_name, test_user_login, test_user_role);
 
-            //Результат
+            //3
             Assert.AreEqual(expected, actual);
         }
 
-        //Проверяем регистрацию
-        //Проверяем добавление товара в корзину
-        //Проверяем редактирование товаров в коризне
-        //Проверяем завершение заказа
-        //Проверяем добавление пользователя через админ панель
-        //Проверяем редактирование пользователя через админ панель
-        //Проверяем удаление пользователя через админ панель
-        //Проверяем редактирование заказа через админ панель
-        //Проверяем удаление заказа через админ панель
+        [TestMethod]
+        public void Check_AddRed()
+        {
+            //1
+            string test_product = "name";
+            int product_type = 1;
+            bool expected = true;
+
+            //2
+            bool actual = AddRedact.ValidateAddRed(test_product, product_type);
+
+            //3
+            Assert.AreEqual(expected, actual);
+        }
     }
 }

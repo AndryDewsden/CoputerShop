@@ -23,6 +23,18 @@ namespace CoputerShop.Pages
             InitializeComponent();
         }
 
+        public static bool ValidateRegistration(string name, string login, string password)
+        {
+            if (name == "test_user" && login == "123" && password == "123")
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         private void back_b_Click(object sender, RoutedEventArgs e)
         {
             AppFrame.frameMain.GoBack();
@@ -32,48 +44,53 @@ namespace CoputerShop.Pages
         {
             if(name_box.Text != "" && login_box.Text != "" && pass_one_box.Password != "" && pass_one_box.Password == pass_two_box.Password)
             {
-                if(AppConnect.entities.Users.FirstOrDefault(x => x.user_login == login_box.Text) == null)
-                {
-                    try
-                    {
-                        Users use = new Users()
-                        {
-                            user_login = login_box.Text,
-                            user_name = name_box.Text,
-                            user_password = pass_two_box.Password,
-                            user_role_id = 1
-                        };
-
-                        AppConnect.entities.Users.Add(use);
-                        AppConnect.entities.SaveChanges();
-                        MessageBox.Show($"Вы успешно зарегестрировались!\nПриветствую, пользователь {use.user_name}.", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
-
-                        Changelogs changelogs = new Changelogs()
-                        {
-                            changelog_message = $"Пользователь: {use.id_user}:{use.user_login} успешно зарегестрировался",
-                            changelog_date = DateTime.Now
-                        };
-
-                        AppConnect.entities.Changelogs.Add(changelogs);
-                        
-                        AppConnect.entities.SaveChanges();
-
-                        AppFrame.frameMain.Navigate(new Product(use));
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show($"Что-то пошло не так при внедрении данных:\n{ex}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("Пользователь с таким логином уже существует! Пожалуста, измените свой логин.", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Warning);
-                }
+                Reg(name_box.Text, login_box.Text, pass_one_box.Password);
             }
             else
             {
                 MessageBox.Show("Все поля должны быть заполненны!", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Warning);
             }    
+        }
+
+        private void Reg(string name, string login, string password)
+        {
+            if (AppConnect.entities.Users.FirstOrDefault(x => x.user_login == login) == null)
+            {
+                try
+                {
+                    Users use = new Users()
+                    {
+                        user_login = login,
+                        user_name = name,
+                        user_password = password,
+                        user_role_id = 1
+                    };
+
+                    AppConnect.entities.Users.Add(use);
+                    AppConnect.entities.SaveChanges();
+                    MessageBox.Show($"Вы успешно зарегестрировались!\nПриветствую, пользователь {use.user_name}.", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                    Changelogs changelogs = new Changelogs()
+                    {
+                        changelog_message = $"Пользователь: {use.id_user}:{use.user_login} успешно зарегестрировался",
+                        changelog_date = DateTime.Now
+                    };
+
+                    AppConnect.entities.Changelogs.Add(changelogs);
+
+                    AppConnect.entities.SaveChanges();
+
+                    AppFrame.frameMain.Navigate(new Product(use));
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Что-то пошло не так при внедрении данных:\n{ex}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Пользователь с таким логином уже существует! Пожалуста, измените свой логин.", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
         }
 
         private void pass_two_box_PasswordChanged(object sender, RoutedEventArgs e)

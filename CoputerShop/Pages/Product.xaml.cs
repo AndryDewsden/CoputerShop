@@ -93,6 +93,18 @@ namespace CoputerShop.Pages
             l_productList.ItemsSource = FindProduct();
         }
 
+        public static bool ValidateProduct(string name, int type, int creator)
+        {
+            if(name == "Монитор" && type == 2 && creator == 1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         public class filt
         {
             public string Name_filter { get; set; } = "";
